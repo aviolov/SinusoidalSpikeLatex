@@ -1,0 +1,514 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amscd}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amsthm} 
+%\usepackage{circuitikz}
+% \usepackage{pgf}
+% \usepackage{tikz}
+% \usetikzlibrary{arrows,snakes,backgrounds}
+% \usepackage{verbatim} 
+% \usetikz
+% \usepackage{subfig}
+\usepackage{graphicx}
+
+% \usepackage[super]{nth}
+% \usepackage{appendix}
+% \usepackage{listings}
+% \usepackage{color}
+
+% \usepackage{hyperref}
+%\usepackage{url}
+
+%\usepackage{cleveref}
+
+\usepackage{aviolov_style}
+\usepackage{local_style}
+ 
+\begin{document}
+
+\title{Fokker-Planck and Fortet equation-based parameter estimation for a
+leaky integrate-and-fire model with sinusoidal and stochastic forcing
+\\
+--\\
+Reply to Referees} 
+
+\author{Alexandre Iolov, 
+Susanne Ditlevsen 
+and
+Andr\'e Longtin
+}
+
+\date{\today}
+
+\maketitle 
+
+%\maketitle
+
+%\tableofcontents 
+
+\vskip 20pt
+
+We want to thank the two referees for the thoughtful and concrete points made on
+our submission. We will attempt to answer all their concerns in a point-by-point
+fashion. Below, we list the referees comments and then our replies immediately
+following each comment with '$>>$' to indicate the reply. But first we discuss
+a revision to the text.
+
+% \tableofcontents 
+
+\section{Major Alteration of the Text}
+In the pursuit of one of the referee's comments, we realized that our methods
+allow us to obtain the estimates using (approximate) Maximum
+Likelihood. We include a few comments on this possibility in the introduction,
+the section on the Fokker-Planck equation and its relation to the ISI survival
+distribution (sec. 3.2). We also detail at some length how this can be done
+for our model and include estimates in a new supplementary material online.
+
+We have altered the text in several places to bring attention to the possibility
+of using MLE:
+
+\begin{enumerate}
+  \item in the Intro (page 3), we write ``A second approach involves numerical solution of the Fokker-Planck
+equation, where the time-dependence is explicitly accounted for. After a
+numerical differentiation, the likelihood function can be calculated providing
+the maximum likelihood estimator. Nevertheless, we chose an alternative loss
+function which seem marginally more robust, directly comparing the survival
+function provided by the solution of the Fokker-Planck equation with its
+empirical counterpart. The two approaches give similar results and they are more
+carefully compared in the supplementary online material.''
+
+\item In the introduction to sec 3 (page 13) we again write that ``An approximate maximum likelihood approach is also possible by numerical
+differentiation.''
+
+\item Finally in the conclusion, we add ``
+The Fokker-Planck equation allows for approximate maximum likelihood
+estimation. We chose an alternative loss function, though, because it
+marginally appeared more robust, possibly because a numerical derivation
+step is avoided. This is further investigated by simulations in the
+supplementary online material. The simulations suggest that the
+distribution of the maximum likelihood estimates in the super-sinusoidal
+regime appears bimodal, which is not occurring for the alternative loss
+function, eq. 17	. ``
+\end{enumerate}
+
+Note that a much more thorough evaluation of the MLE estimators is found in the
+supplemental material attached to the manuscript submission ('mle\_note.pdf').
+
+\section{Referee 1 Comments}
+
+\subsection{Main Concern}
+My main concern is on the claim that modelled intertimes are independent. I am
+not sure of this fact and I would like some comments on this point in the paper.
+Please think to the following instance. Imagine to have a spike when $\phi_m =
+\pi$: the boundary decreases and the next ISI will be fast (with high
+probability) as well as the further next since the boundary will still be
+decreasing with high probability (at least for suitable choices of the
+parameters). Are these ISIs independent? I do not think they are independent,
+but they are conditionally independent.
+
+$>>$ Indeed the fact that the interspike intervals are not independent is the
+main challenge that the paper seeks to overcome. They are independent in so far
+as two intervals, $I_1, I_2$ that happen to begin at the same phase $\phi$ are
+assumed to be independent draws from the density $g_\phi(I)$. That is to say
+that it is the phase of the imposed sin wave that generates any correlations in
+the observed intervals. Thus 'conditional independence' seems to be the right
+term where 'conditional' refers to the value of the sine phase at the start of
+the interval. We would like to make this clearer and have altered the paper to
+this effect as follows:
+
+a.(In sec. 1) ``Even so, attempts to solve the estimation problem in
+these non-stationary settings have been rare."
+
+becomes
+
+``Even so, attempts to solve the estimation problem in
+these non-stationary settings have been rare. One problem is that the ISIs are
+no longer independent nor identically distributed.''
+
+b. (in sec 2.1)
+`` This is the formal statement that
+in a sinusoidally-driven neuron, the interspike intervals are not identically
+distributed. ``
+
+becomes
+
+``This is the formal statement that
+in a sinusoidally-driven neuron, the interspike intervals are not identically
+distributed, and are only independent conditioned on the sinusoidal phase at the
+interval's onset.''
+
+c. (at the end of sec 3.0) in the last paragraph we add a few more explicit
+references to the dependence and non-identical distribution of $I_n$. It now
+reads:
+
+''The immediate problem (\ldots) is that the $I_n$'s are no longer identically distributed since
+the phase $\phi_{n-1}$ of the $n$th interval $I_n$ depends on $t_{n-1}$, the
+time the previous spike occurred. The $I_n$'s are also dependent, but conditionally
+independent given $\phi_{n-1}$. So the trajectories in each interval are
+parametrized by the value of $\phi_{n-1}$ at the time of the last spike/reset.
+We overcome this obstacle by splitting the $I_n$'s in groups, and
+approximating the $I_n$'s within groups as coming from identically
+distributed trajectories in a sense to be specified below. This approximation
+which solves the challenge of dependent and non-identically distributed ISIs is
+the primary contribution of this paper.''
+We also include a reference to (Longtin 1995), [29 in the paper], for a more
+thorough discussion on the dependence and distribution of the $I_n$'s.
+
+\subsection{Minor comments}
+\vskip 10pt 1. Formula (1): please define $t^n_+$
+
+$>>$ Below (1) we add ``and $t_n^+$ denotes the right
+limit taken at $t_n$''
+
+\vskip 10pt 2. Page 4: Move the phrase: "Table 1 shows examples of corresponding
+parameter values while figs. 2 and 3 illustrate how each regime behaves
+by plotting the survivor distribution, G (t), ..." to the end of page 4 (to
+understand the table it is useful to know the meaning of different regimes)
+
+$>>$ The table with parameter values is now moved and the figs. with the example
+trajectories and the example distributions are all in the same sentence after
+the discussion of what the regimes mean.
+
+\vskip 10pt 3. Formula (7): specify the meaning of $\vt$: I think that it should be the
+value of the boundary (i.e. $v_{th} = 1$). Is it correct?
+
+$>>$ Indeed this is confusing. Earlier (in the unnumbered equation before 7) we
+used $x_{th} = 1$ explicitly. So we will just put $1$ instead of $\vt$ again for
+consistency with (eq. 7) as well. Note that we have introduced the
+non-dimensional threshold, $\xth = 1$ along with the other non-dimensional variables before eq.
+2.
+
+
+\vskip 10pt 4. Page 6. I do not understand the phrase "meaning we take
+$\xmin$ to be
+one asymptotic standard deviation less than the lowest value of the asymptotic,
+time-dependent mean...". $\beta^2/2$ is the diffusion coefficient of the considered
+process. The process is Gaussian and its standard deviation can be computed from the
+equation. Have I misunderstood something?
+
+$>>$ The explanation was not clear enough and on top of that it did
+not exactly reflect what was going on in our code. We have changed our phrasing
+as follows:
+
+'' For the left(lower) limit of the computational domain, we use the formula $$ \xmin =
+\min(\underbrace{\a -\g/\sqrt{1+\th^2}}_{\textrm{mean}} - 2 \underbrace{\b/
+\sqrt{2}}_{\textrm{std. dev}}, -0.25).$$ This choice requires some explanation.
+In the $t\ra \infty$ limit, the distribution of $X_t$ in
+(eq. 3) {\sl without} thresholding is Gaussian
+with mean given by (eq. 12) and variance equal to $\beta^2/2$. Thus to truncate
+the computational domain for the thresholded process from below, we take the lowest value of
+the asymptotic mean, $\alpha - \gamma / \sqrt{1 + \th^2}$, then from
+this we subtract two standard deviations, $2\b/\sqrt{2}$ and set the result to be the lower
+bound, $\xmin$. Finally, if this value for $\xmin$ happens to be larger than
+$-.25$, we enforce that $\xmin \leq -0.25$. ''
+
+
+\vskip10pt
+
+\vskip 10pt 5. Eq. (8) does not follow directly from eq. (5), please show how to move
+from one eq. to the other. Eq. (8) reminds the backward Kolmogorov
+equation. If this is the case, add some comment to help the reader.
+
+$>>$ Indeed, going from the PDE for the density $f$, eq. (5), (this is the Fokker-Planck
+equation in textbooks) to the PDE for the distribution $F =  \int_{\xi \leq x} f
+(\xi, t) \intd{\xi}$, eq. (8), is not trivial. An example of converting the PDEs can be
+found in ref. 23 in the paper, but there are small differences with the
+context here.
+We now include the following derivation immediately before what was eq. 8 (now
+9):
+
+First, at the lower boundary, it is intuitive that the cumulative distribution
+should be zero, $ F(\xmin,t) = 0 $, while $f(1,t) = 0$ implies that at the upper boundary
+$ \di_xF(1, t) = 0 $. Inside the domain, the PDE itself reformulates as:
+\begin{eqnarray*}
+\di_t f(x,t) &=&  \di_x \left[\frac{1}{2}\di_x [\beta^2 f] -  (\alpha - x + \gamma \sin(\th
+(t - \phi)) f \right]
+\end{eqnarray*}
+so that
+\begin{eqnarray*}
+\di_x \di_t F(x,t) &=& \di_x \left[
+\frac{\beta^2 }{2}\cdot \di^2_x F -
+						(\alpha- x + \gamma \sin(\th (t + \phi))  \cdot \di_xF \right].
+\end{eqnarray*}
+Integrating with respect to $x$ then gives
+$$
+\di_t F(x,t) =
+\frac{\beta^2 }{2}\cdot \di^2_x F -
+					(\alpha- x + \gamma \sin(\th (t + \phi))  \cdot \di_xF + C(t)
+$$
+where $C(t)$ is a constant of integration for fixed $t$. Now consider
+the lower boundary condition, $x =
+\xmin$. Here $F(\xmin,t) = 0$ implies that $\di_tF = 0$ and so
+\begin{equation}
+C(t) = - \left[ \frac{\beta^2 }{2}\cdot \di^2_x F -
+			(\alpha- x + \gamma \sin(\th (t + \phi))  \cdot \di_xF \right].
+\label{eq:const_of_integration}
+\end{equation}
+But the right-hand side in eq.\ \eqref{eq:const_of_integration} is precisely the
+reflecting boundary condition on $f$ once we recall that $\di_x F = f$. Therefore $C(t) \equiv 0$.
+
+The PDE initial condition is: $$ F(x,0) = H(x) $$
+
+The similarity of (8 - now 9) to the backward Kolmogorov equation is only
+superficial.
+
+
+\vskip 10pt 6. Strictly speaking eq.(9 - now 10) is not the Fortet equation, it
+is its integral on $(-\infty, \vt)$
+
+$>>$ Agreed. We have rephrased the lead-up to (eq. 9, now 10) accordingly.
+
+
+\vskip 10pt
+7. Page 7, line 2: "If we make a certain transformation we can find
+a time- homogeneous". It is not clear the aim of the transformation. Do you
+want to transform the process solution of the SDE of page 6 (beginning of
+the paragraph, not numbered) constrained by a constant boundary into
+a time homogeneous process constrained by a time dependent boundary?
+Please explain your aim and specify the boundary for process of eq. (10).
+Furthermore it is not written what is $X (t)$ in this paragraph (I imagine
+it is an OU process)
+
+$>>$ We have now changed the manuscript to explicitly identify that $X_t$ is
+the solution to the SDE in eq. (3). Further, we motivate our manipulations by
+prefacing them with the following:
+
+''The Fortet equation is particularly appealing to use when we have an analytical
+expression for $\F$. For the problem at hand, $\Phi$ is complicated
+due to the time-dependent forcing. However, the following transformation yields
+a time-homogeneous $Y$ for which $\Phi$ will be tractable, along with an associated
+moving threshold, $\vt(t)$. This makes feasible
+the use of the Fortet equation. To obtain this transformation, cf. [26], consider\ldots ''
+
+\vskip 10pt
+
+8. Page 10, $\G$ is solution of the FP equation with absorbing condition. Hence
+it is not Gaussian and its distribution becomes more different from a
+Gaussian as the time increases. Have you checked the goodness of your
+approximation? Some comments on this point should be added.
+
+$>>$ This is a good point, we have only judged the quality of the
+approximation by the quality of the initializers that it has provided us.
+Following up on the referee's suggestion, we include a new figure (fig. 7) in
+section 3.4 to illustrate what the initializer is trying to do.
+
+We introduce fig. 7 in the text as follows: "What we show in (fig 7) is the
+following: First we show the survival distribution for a given regime and
+$\phi_m$ fixed. Then using data generated from such a regime and with $\phi_n$
+in the $m$th bin, the initializer tries to find the best approximation by the
+motion of a Gaussian bell which will fit this data, in the sense of solving for
+$\a,\b,\g$ as previously described. Once this is done, we then show in red the
+amount of area under this Gaussian bell to the left of the threshold.``
+
+
+And we use the following caption (in fig. 7) ''The blue curves are the
+numerically obtained survivor  distributions $\G_\phi$ for the exact parameters
+in the four regimes. The red  curves are obtained in the following manner:
+Simulations using the true  parameters were used to generate sample spikes.
+Using these samples, the initializer algorithm was used to generate estimates
+for $\a,\b,\g$. Using these estimates, the bell curve discussed in sec.\ 3.4 was
+formed and evolved in time. Thus, the red curve drawn in the figures measures
+the area under this bell that is to the left of the threshold at time $t$.  Of
+course the interpretation of the survival distribution for an ISI as a fraction
+of the area under a moving bell with conserved total area is wrong, but the
+assumption is useful in automatically generating initial values for the more
+appropriate approximations to start their work.''
+
+\clearpage
+
+\section{Referee 2 Comments}
+\subsection{Major Compulsory Revisions}
+1. In sec 3.3, ``Fortet Algorithm", the third sentence reads
+\begin{quote}
+Noting that
+$\int_0^t g (\tau) [1-\F ] \intd{\tau} = \Exp[ (1 - \F ) \charf_{I \leq t} ]$ where
+the expectation is taken with respect to the distribution of the random variable
+$I$, we can use the fact that the ISIs are independent\ldots
+\end{quote}
+The authors should clarify the independence argument here.
+Successive interspike intervals $(I_n; I_{n+1})$ of the periodically forced
+leaky integrate and  re neuron are not independent. Much has been made of this fact,
+as one example see [3]. If the reference is not to independence of serial
+ISIs, the authors should explain what they mean. If the authors need to assume
+independence (or approximate independence), they should explore and discuss
+the consequences of non-independence of the ISIs.
+
+$>>$ This is a similar concern as pt. 1 from Referee 1, and we refer to
+our reply above.
+
+\vskip 10pt
+2. The review of the literature on parameter estimation for neural models from spike train data
+should be more thorough, with relationships to the present work explained more fully. For
+instance, the authors refer to the point process approach proposed in [1]. It is appropriate to
+refer to this paper as seminal", but it is conducted in a discrete time setting, which appears
+rather different (at least at first) from the continuous time setting of the
+leaky IF model.
+
+In [5] ([19] in the paper) Paninski et al. showed that the log likelihood for
+their linear-nonlinear cascade model is concave. Does their approach really reduce to
+just ``proposing a numerical solution to the Fokker-Planck equation", as the
+authors put it? In general, more explanation of the prior art and its relation
+to the present manuscript would be appropriate throughout the introduction.
+
+$>>$ We have extended the paragraphs on previous methods in the introduction.
+Most pertinently, we include the following remark:
+
+`` In (19 - Paninsky,2004) a more complicated model with linear filters is
+considered, allowing also for the spike history to influence the membrane
+potential dynamics. The estimation problem is solved through numerical solutions
+to the Fokker-Planck equation, and it is shown that the log-likelihood is
+concave, thus ensuring a global maximum, see also (20, 21 - Dong,2011,
+Sirovich,2011)''
+
+Also it was this comment that prompted us to explore the MLE approach mentioned
+at the end of sec. 3.2 and discussed at length in the newly added supplementary
+material online.
+
+
+\subsection{Minor Essential Revisions}
+1. Section 2.1: if $t_n$ is the end of the interval $J_n$, then probability
+density for $I_n$ should involve conditioning on $\phi_{n-1}$, not $\phi_n$, as
+in
+$$
+g_{\phi}(\tau) \intd{\tau} := \Prob(I_{n+1} \in [\tau, \tau + \intd{\tau})  | \phi_{n-1}
+= \phi) $$
+Similarly for the other expressions in equations (4).
+
+$>>$ Good catch. Since we refer to eq. 3, which contains $\phi_n$, we
+keep eq. 3 as is and change $I_n \ra I_{n+1}$ in eq. 4.
+
+\vskip 10pt
+
+2. Figure 6 and the caption are a little unclear. Does the time axis run from 0
+to 7, or 0 to $2 \pi$? Does the survivor function go to zero as $t \ra 2 \pi$
+because the intervals are wrapped around the circle, or because there is
+actually no probability of skipping a cycle (i.e.\ $\Prob(I_n > 2 \pi) = 0)$?
+Also, the caption says 'the most populous bin for each M is shown". How rapidly
+do the results degrade for the other bins?
+
+$>>$ There is  no wrapping and for this data set (of 1000 ISIs) the largest ISI
+is of duration $\approx 6.55$, which happens to be close to $2
+\pi$. This seems to imply that for this regime (super-sinusoidal) almost
+all spikes occur during or soon after the first cycle of the
+sinusoid. We have explicitly mentioned the largest ISI value in the
+caption to clarify this point.
+
+As to how rapidly the estimates degrade, we acknowledge that one should check
+not only the most populous bin, where things are likely to work well, but also
+the less populous ones. To this effect we modify fig. 6, to include both  the
+most populous and the least populous bins (note, we discard bins with less
+than 5 spikes, as described in the text.)
+
+\vskip 10pt
+
+3. It is unclear from the captions of Figs 11 and 12 what parameters were used
+for each plot. For instance, in Figure 11, the top row (panels A, B, C) are
+labeled $\alpha = 1.40$ (panel A), $\beta = 0.30$ (panel B),
+ $\gamma= 0.14$ (panel C). The caption just says A,B,C) Supra-Threshold;".
+Is it supposed to be clear what setting $\alpha = 1.4$ means for $\beta,\gamma$ in panel A,
+for example? Were all three parameters used for all three plots? If so, what is
+plotted? In addition, it is not clear what one is supposed to conclude by
+comparing figures 11 and 12. The comparable panels are not plotted on the same
+scale, so it is time consuming to assess (by eye) whether the N = 100 or N =
+1000 distribution is significantly tighter or more accurate. The authors should
+consider superimposing the data form each pair of panels into a single panel,
+with different marker shapes or colors, so that one can see the contraction
+and/or shift of the distributions.
+
+$>>$ We have changed the legend and text for Figs 12 and 13 (old 11 and 12). We
+hope it is clearer now.
+
+We think that super-imposing using different markers for different $N$ will be
+visually confusing. In fact, the goal of these plots was not to show how
+estimates behave as $N$ increases, but how the different methods perform for
+different data sizes, especially to study the bias. An example of a figure as
+suggested by the referee can be found in figure \ref{fig:FP_vs_Fortet_joint_Ns}
+below. Indeed, it is clear there that the estimates for $N=100$ are
+more scattered than those for $N=1000$.
+\begin{figure}[htp]
+\begin{center}
+ \includegraphics[width=1\textwidth]{Figs/Estimates/FP_vs_Fortet_Ns_joint_cross_compare_joint.pdf}
+  \caption{
+%   IMAGE INCLUDED SEPARATELY AS ADDITIONAL MATERIAL -
+%   FP\_vs\_Fortet\_Ns\_joint\_cross\_compare\_joint.pdf
+  An example of putting the cross-plots comparison between Fortet and FP for both $N=100$ data points (crosses) and $N=1000$ data points (diamonds) on same graphs.
+  Each row corresponds to one regime and one set of simulations. Each column
+  corresponds to a parameter, with the specific value indicated above each plot.
+A,B,C) Supra-threshold; D,E,F) Super-sinusoidal; G,H,I) Critical; J,K,L) Sub-threshold.}
+  \label{fig:FP_vs_Fortet_joint_Ns}
+\end{center}
+\end{figure}
+We believe that we should stick to existing figures (old 11,12, now 12, 13), but
+if the referee feels strongly about this, we could include the new figure,
+(fig. \ref{fig:FP_vs_Fortet_joint_Ns}).
+
+
+\vskip 10pt
+4. In the figures 7-10 and 13, the lower plots are labeled 'sum of absolute
+errors", and the quantities plotted are identified as the sum of the absolute
+values of the errors, $$E =
+|\tfrac{\aest - \alpha}{\alpha}|+ |\tfrac{\best - \beta}{\beta}|+ |\tfrac{\gest  -
+\gamma}{\gamma}|$$
+I have two concerns about these plots.
+
+4A. Wouldn't the sum of the absolute values of the errors" refer to
+$| \aest - \alpha|+ | {\best - \beta} |+ | {\gest  -
+\gamma}|$? The
+quantity might better be called, e.g., the summed relative error, or abbreviated?
+
+%\vskip7pt
+4B: What would be considered a large value for the summed relative errors, E?
+The typical range seems to be from 0 to 3 (in Figure 10 the panels goes up to E
+= 4). A 100\% relative error, or a 300\% summed relative error, strikes me as rather large.
+The authors should comment with greater length and clarity on this aspect of the results.
+
+$>>$ We realize that plots of relative errors are not the appropriate
+tool for illustrating the results. For example, it makes no sense to
+consider ``relative'' values of alpha and gamma. Zero plays no special
+role and alpha can also be negative, so relative to its value says
+nothing about how well you estimate. The sizes of those two parameters
+have to be judged in relation to the (arbitrary) choices of reset and
+threshold. (Arbitrary in the sense that there is no information about
+the scaling of the underlying process from first-passage times only,
+thus results are relative to the chosen values and their distance). We
+have substituted those 5 plots
+with boxplots, where the distribution of the estimator can be better
+evaluated.
+
+\subsection{Discretionary Revisions}
+1. Intro/para 2: 'Many sensory stimuli like sound" should have a comma, as in
+'Many sensory stimuli [COMMA] like sound".
+
+$>>$ Done.
+
+\vskip 10pt 2. There is a new contribution to the literature on stochastic leaky IF models
+that is not necessarily germane to parameter estimation but is worth the
+authors' notice, if they aren't already aware of it  [6].
+
+$>>$ The referenced paper discusses the effect of roughness of the threshold
+boundary on LIF-like models such that for a 'rough enough' boundary, the
+interspike density concentrates on discrete sets of Lebesgue measure 0. We thank
+the referee for the reference, however we have found it difficult to place in a
+proper context in our work and indeed there are several other papers that we
+have found pertinent that we have omitted in order to keep the manuscript more concise.
+
+\vskip 10pt 3. The typesetting near the figure legends is incorrect, e.g.
+\\Figs/Trajectories/pathT = 24combined:pdf" and similar.
+
+$>>$ Done, thanks.
+
+\vskip 10pt 4. It would be appropriate to include an early reference to the Fortet equation. For instance,
+Buonocore et al. [2] cite Fortet, 1943 [4].
+
+$>>$ We include a ref. to Fortet, 1943 just before eq 10.
+
+\vskip 10pt 5. In 3.1 the notation $2\pi/\th/M$ could be clarified by adding parentheses.
+
+$>>$ Done.
+% \bibliographystyle{plain}
+% \bibliography{library}
+\end{document}

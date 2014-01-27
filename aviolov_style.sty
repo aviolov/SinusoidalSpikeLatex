@@ -1,0 +1,225 @@
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{bbm}
+
+%Custom COMMANDS:
+\newcommand{\floor}[1]{\lfloor #1 \rfloor }
+\newcommand{\intd}[1]{\, \mathrm{d} #1}
+\newcommand{\ceil}[1]{\lceil #1 \rceil }
+% \newcommand{\sign}[1]{ \textrm{\lceil #1 \rceil }
+\newcommand{\argmax}{\operatornamewithlimits{arg\,max}}
+\newcommand{\argmin}{\operatornamewithlimits{arg\,min}}
+\newcommand{\argsup}{\operatornamewithlimits{arg\,sup}}
+\newcommand{\arginf}{\operatornamewithlimits{arg\,inf}}
+% \newcommand{\sgn}{\operatorname{sgn}}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Prob}{Prob}
+\DeclareMathOperator{\Exp}{ \mathbbmtt{E}  } %the expectation operator
+\DeclareMathOperator{\Var}{ \mathbbmtt{V}ar  } %the variance operator
+% \DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\LT}{ \mathscr{L} } %Laplace
+\DeclareMathOperator{\FT}{ \mathscr{F} } %Fourier
+\DeclareMathOperator{\Ham}{ \mathcal{H} } %Hamiltonian!
+\DeclareMathOperator{\proj}{proj}
+
+% \def \LT {{ \mathscr {L} }} %Laplace
+% \def \FT {{ \mathscr {F} }} %Fourier
+% \def \Exp{{ \mathbbmtt{E}  }} %the expectation operator
+% \def \Prob 	  {{ \mathbbmtt{P}  }}
+% \DeclareMathOperator{\Per}{Per}
+\def \Re {{ \mathfrak{Re} }}
+\def \Im {{ \mathfrak{Im} }}
+% \DeclareMathOperator{\KER}{Ker}
+% \DeclareMathOperator{\Fix}{Fix}
+
+
+%%ARROWS:
+\def    \ra     {{\rightarrow}}
+\def    \la     {{\leftarrow}}
+\def    \Lra    {{\longrightarrow}}
+\def    \iff    {{\Leftrightarrow}}
+% \def    \pl     {{\hookrightarrow}}
+% \def    \homeo  {{\overset{\simeq}{\longrightarrow}}}
+% \def    \iso  	{{\overset{\cong}{\longrightarrow}}}
+
+%%SPACES:
+\def    \N     {{\mathbb {N} }}
+% \newcommand{\space}[1]{\mathbb{#1}}
+\def    \Z      {{ \mathbb{Z} }}
+\def    \Q      {{ \mathbb{Q} }}
+\def 	\R		{{ \mathbb{R} }}
+\def 	\Rplus	{{ \mathbb{R^+} }}
+\def	\C		{{ \mathbb{C} }}
+% \def    \P     {{\mathbb P}}
+% \def    \B      {{ \mathcal{B}}}
+% \def    \L      {{ \mathcal{L}}}
+% \def    \l      {{ \mathcal{l}}}
+\def    \H      {{ \mathbb{H}}}
+
+\def	\Hone		{{ \H^1(\O)     }}
+\def	\Hnought	{{ \H^1_0(\O)     }}
+\def	\ltwo 		{{ \mathscl{l}^2 	 }}
+\def	\Ltwo 		{{ \mathbb{L}^2 (\O)    	 }}
+\def	\Lone 		{{ \mathcal{L}^1 (\O)    	 }}
+\def	\Lzeromean	{{ \mathcal{L}^2_{\hat{0}} }}
+\def 	\lnought {{ \mathcal{l}_{0} }}
+
+%Indicator functions:
+\def	\charf		{{ \mathbbmss{1} }}
+%FINITE ELEMENTs:
+% \def	\Mh		{{ \mathcal{M}_h }}
+% \def	\U		{{ \mathcal{U} }}
+% \def	\Uh			{{ \U_h	 }}
+% \def	\Utest		{{ \U_{test} }}
+% \def	\Utesth		{{ \U_{test,h} }}
+% \def	\P		{{ \mathcal{P} }}
+% \def	\Ph			{{ \P_h }}
+% \def	\Ptest		{{ \P_{test} }}
+% \def	\Ptesth		{{ \P_{test,h} }}
+% \def	\Nh		{{ \mathcal{N}_h }}
+% \def	\Ntesth	{{ \mathcal{N}_{test,h} }}
+% \def	\Th		{{ \mathcal{T}_h }}
+% \def	\Ttesth	{{ \mathcal{T}_{test,h} }}
+% \def	\Dh		{{ \mathcal{D}_h }}
+% \def	\Dtesth	{{ \mathcal{D}_{test,h} }}
+
+% \def	\Res	{{\boldsymbol{R} }}
+
+%%VARIABLES
+\def	\x		{{ \boldsymbol{x} }}
+\def	\f		{{ \boldsymbol{f} }}
+\def	\u		{{ \boldsymbol{u} }}
+\def	\v		{{ \boldsymbol{v} }}
+\def	\w		{{ \boldsymbol{w} }}
+\def	\zero	{{ \boldsymbol{0} }}
+
+\def    \a      {{\alpha}}
+\def    \b      {{\beta}}
+\def    \g      {{\gamma }}
+\def    \Ga     {{\Gamma}}
+\def	\k		{{\kappa }}
+\def 	\l		{{\lambda}}
+\def    \e      {{\epsilon}}
+\def    \eps    {{\epsilon}}
+\def 	\t		{{\tau}}
+\def 	\th		{{\theta}}
+\def 	\Th		{{\Theta}}
+\def    \o      {{\omega}}
+\def    \O      {{\Omega}}
+\def    \r      {{\rho}}
+\def 	\m		{{\mu }}
+\def    \s      {{\sigma }}
+% \def    \z      {{\zeta}}
+
+\def 	\grad		{{ \nabla }}
+\def 	\const 		{{ \mathrm{const} }}
+% \def    \M      {{\overline{M}}}
+% \def    \CCM    {{ \overline{\mathcal{M}}}}
+% \def    \crit   {{ \mathrm{Crit} }}
+% \def    \ind    {{ \mathrm{ind} }}
+
+%VECTOR/TENSOR Calculus
+\def	\n		{{ \boldsymbol{n} }}
+\def 	\I		{{ \boldsymbol{I} }}
+\def	\D		{{ \boldsymbol{d} 	 }}
+\def	\S		{{ \boldsymbol{\sigma}}}
+% \def	\T   	{{ \boldsymbol{\tau} }}
+% \def	\Txx   	{{ \tau_{xx} }}
+% \def	\Txy   	{{ \tau_{xy} }}
+% \def	\Tyy   	{{ \tau_{yy} }}
+
+%%OPERATORS:
+% \def	\divU	{{ \nabla \cdot \u }}
+% \def	\divUh	{{ \nabla \cdot \u_h }}
+% \def	\gradU	{{ \nabla \u}}
+% \def	\Ugrad	{{ (\u \cdot \nabla) }}
+% \def	\lapU	{{ \Delta \u }}
+% \def	\gradP	{{ \nabla p}}
+% \def	\divS	{{ \nabla \cdot \S}}
+% \def	\gdot   {{ \dot{\gamma} }}
+% \def	\Gdot   {{ \dot{\boldsymbol{\gamma}} }}
+
+
+% % \def	\UCtau	{{ \tackrel{\nabla}{\mathbf{\tau}} }}
+% \def	\ucT
+% 	{{ \left( \frac{\d \T}{\d t} + \Ugrad \T -
+% 	\gradU \cdot \T-\T\cdot \gradU^T \right) }}
+% \def	\ucTh
+% 	{{ \left( \frac{\d \T_h}{\d t}  + \Ugrad \T_h -
+% 	\gradU \cdot \T_h - \T_h \cdot \gradU^T \right) }}
+% \def	\N		{{ \hat{N} 		}}
+% \def	\Nst	{{ \N_{st} }}
+% \def	\ag		{{ \mathfrak{a}(\gdot) }}
+% %%% \def	\ag		{{ a(\gdot)N_{tot}}}
+% \def	\bg		{{ \mathfrak{b}(\gdot) }}
+%
+% \def 	\De		{{ \mathtt{De} }}
+% \def 	\Deinf		{{ \De_{\infty} }}
+% \def 	\Re		{{ \mathtt{Re} }}
+%
+% %test functions:
+% \def	\tu		{{ \phi_{\u} 	  }}
+% \def	\tp		{{ \phi_{p}	  	  }}
+% \def	\tD		{{ \phi_{\D} 	  }}
+% \def	\tN		{{ \phi_{\N}	  	  }}
+% \def	\tT		{{ \phi_{\T} 	  }}
+%
+% \def	\tausupg	 {{ \alpha^{SU}_h }}
+
+%%DIFFERENTIALS:
+\def	\dt		{{ \Delta t }}
+\def 	\intdt 	{{ \, \mathrm{d}t }}
+\def 	\intdtau {{ \, \mathrm{d} \t }}
+\def 	\intdx 	{{ \, \mathrm{d}x }}
+\def 	\intdy 	{{ \, \mathrm{d}y }}
+
+\def    \d      {{\Delta}}
+\def    \di      {{\partial}}
+
+
+% %%NETWORK SYMBOLS:
+% \def \ppack {{ \boxplus  }}
+% \def \npack {{ \boxminus }}
+% 
+% \def \pnode {{ \oplus }}
+% \def \nnode {{ \ominus }}
+% \def \pjunction {{ \bullet }}
+% \def \njunction {{ \circ }}
+% \def \phub {{ \blacksquare }}
+% \def \nhub {{ \square }}
+% 
+% %COEFFICIENTS:
+% \def \cp {{ c_{+} }}
+% \def \cn {{ c_{+} }}
+% \def \kp {{ \k_{+} }}
+% \def \kn {{ \k_{-} }}
+ 
+% %%TIME CONSTANTS:
+% \def 	\TFi 	{{ T_{F_i} }}
+% \def 	\TCi 	{{ T_{C_i} }}
+% \def 	\TEi 	{{ T_{E_i} }}
+% \def 	\TFj 	{{ T_{F_j} }}
+% \def 	\TCj 	{{ T_{C_j} }}
+% \def 	\TEj 	{{ T_{E_j} }}
+% \def 	\TF 	{{ T_F }}
+% \def 	\TC 	{{ T_C }}
+% \def 	\TE 	{{ T_E }}
+% \def 	\NEi	{{ N_{E_i} }}
+% \def 	\NE		{{ N_{E}   }}
+% \def 	\nE		{{ n_E }}
+% \def 	\nB		{{ n_B }}
+% \def 	\nBO 	{{ n_{B}(0) }}
+% \def    \ndot   {{ \dot{n} }}
+%DISTRIBUTIONS and SPECIAL FUNCTIONS:
+\def \POI { POI }
+\def \Normal {{ \mathcal{N} }}
+
+
+%COMPLEX TEXT:
+\def \ith {{i^{\textrm{th}}} }
+\def \jth {{j^{\textrm{th}}} }
+% \def \nth {{n^{\textrm{th}}} }
+\def \mth {{m^{\textrm{th}}} }
+\def \st {{ \textrm{st.\ } }}
+\def \ow {{ \textrm{o/w } }}

@@ -1,0 +1,68 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amscd}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+% \setcounter{secnumdepth}{0}
+% \usepackage{circuitikz}
+\usepackage{pgf}
+\usepackage{tikz}
+% \usetikzlibrary{arrows,snakes,backgrounds}
+% \usetikz
+\usepackage{subfig}
+
+% \usepackage{appendix}
+% \usepackage{listings}
+% \usepackage{color}
+
+\usepackage{hyperref}
+%\usepackage{url}
+
+\usepackage{cleveref}
+\usepackage{ulem}
+
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+
+\usepackage{aviolov_style}
+\usepackage{local_style}
+
+\begin{document}
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{l|ccc}
+Regime Name & $\a$ & $\b$ & $\g$ \\ \hline
+Supra-Threshold&1.40&0.30&0.14 \\
+Critical&0.50&0.30&0.71 \\
+Sub Threshold&0.40&0.30&0.57 \\
+Super Sinusoidal&0.10&0.30&1.98 \\
+\end{tabular}
+\caption{Example $\abg$ parameters for the different regimes, given $\th = 1.0$}
+\label{tab:regimes}
+\end{center}
+\end{table}
+
+The key points are:
+\begin{enumerate}
+  \item $\th = 1.0$!!!
+  \item for the Supra-Threshold, Super Sinusoidal regimes: $\a, \g$ are chosen
+  such that
+  \begin{enumerate}
+  	\item  $\a + \g / \sqrt{1 + \th^2} = 1.5$ \\
+  	AND
+  	\item  $\a = 1.4 $ (Supra-Threshold)
+  	\item $\g / \sqrt{1 + \th^2} = 1.4 $ (Supra-Sinusoidal)
+\end{enumerate}
+	\item for the Critical regime: $\a + \g / \sqrt{1 + \th^2} = 1.$ AND  $\a = \g
+	/ \sqrt{1 + \th^2}$
+	\item for the Sub-Threshold regime: $\a + \g / \sqrt{1 + \th^2} = .8$ AND  $\a
+	= \g / \sqrt{1 + \th^2}$
+\end{enumerate}
+
+ 
+\end{document}

@@ -1,0 +1,556 @@
+\begin{figure}[ht] 
+\begin{center} 
+\includegraphics[width=0.95\textwidth]{Figs/Trajectories/path_T=24_combined.pdf} 
+\end{center} 
+\caption{Example trajectories from \cref{eq:X_evolution_uo} for 
+the four different parameter regimes using the parameter values given in 
+\cref{tab:regimes}. A) supra-threshold, B) super-sinusoidal, C) critical, D) 
+sub-threshold. In the supra-threshold regime 
+spikes occur regularly and often; in the super-sinusoidal regime 
+spikes cluster near the peak of the sine wave; in the critical regime 
+they occur less often; and in the sub-threshold regime, spikes occur 
+rarely. For all regimes, $\th = 1$.}  
+\label{fig:trajectory_examples}     
+\end{figure} 
+\begin{figure}[ht] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth]{Figs/FP/regimes_pdf_combined.pdf} 
+\caption{The four different parameter regimes using the parameter values given in 
+\cref{tab:regimes}. Illustrated are the 
+probability density functions, $g_{\phi_m}(t)$, for representative $\phi_m = 
+2\pi/\th \times \{0,0.25,0.5,0.75\}$.  
+Varying $\phi_m$ has, 
+ for the most part, the effect of shifting the curves laterally,  
+ while varying $\abg$ changes their characteristic form. For all regimes, $\th 
+ = 1$. 
+ A) supra-threshold, B) super-sinusoidal, C) critical, D) sub-threshold} 
+\label{fig:4regimes_illustrated_PDF}   
+\end{center}       
+\end{figure}              
+\begin{figure}[ht]     
+\begin{center}  
+\includegraphics[width=0.99\textwidth]{Figs/FP/regimes_sdf_combined.pdf} 
+\caption{The four different parameter regimes using the parameter values given in 
+\cref{tab:regimes}. Illustrated are the survivor 
+distribution functions, $\G_{\phi_m}(t)$, for representative $\phi_m = 2\pi/\th 
+\times \{0,0.25,0.5,0.75\}$. Varying $\phi_m$ has, for the most part, the effect 
+of shifting the curves laterally, while varying $\abg$ changes their 
+characteristic form. 
+A) supra-threshold, B) super-sinusoidal, C) critical, D) sub-threshold.} 
+\label{fig:4regimes_illustrated_SDF}     
+\end{center} 
+\end{figure}      
+\begin{figure}[h] 
+\begin{center} 
+\includegraphics[width=0.95\textwidth]{Figs/FP/SDF3D_combined.pdf}  
+\caption{Example solution to \cref{eq:FP_pde_OU_absorbBC_CDF} for 
+$(\a,\b,\g) = (0.5, 0.3, 0.5\sqrt{2})$; $\th= 1, \phi = \pi / 2$. 
+In A,B,C, we show the full solution in space-time $F(x,t)$. In (d) we show 
+the time solution at the upper boundary, $F(1,t)$.}  
+\label{fig:FP_pde_OU_absorbBC_CDF}  
+\end{center} 
+\end{figure} 
+\begin{figure}[ht] 
+\begin{center} 
+\includegraphics[width=0.9\textwidth]{Figs/Bins/Example_composite.pdf} 
+  \end{center} 
+\caption{ The raw $(\In, \phi_n)$ pairs (left) are binned into a set of $M$ bins 
+with a representative $\phi_m$ (right) and the ISIs within each bin are treated 
+as a renewal process. In this illustration, $M=8$, $\th = 
+1$ while the parameters $\abg$ are taken from the 
+supra-threshold regime. } 
+\label{fig:binning_visualized}  
+\end{figure} 
+\begin{figure}[h] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth]{Figs/FP/EffectOfM_Referees.pdf} 
+\caption{Effect of $M$, the number of bins, on the approximate survival 
+distribution. The full-drawn blue curve is the true survivor distribution 
+given in \cref{eq:FP_pde_OU_absorbBC_CDF}, the red points are the approximation 
+given in \cref{eq:SDF_estimate_per_bin}.   
+In the figures, the least populous (above) and most populous (below) bin for 
+each $M$ is shown. The width of the bins is $\dphi = {2\pi}/{(\th M)}$. 
+We have used A,E) $M=5$, B,F) $M=10$, C,G) $M=20$, 
+D,I) $M=40$. As $M$ increases, the approximation of using the survival 
+distribution using $\phi_m$ instead of $\phi_n$ improves since $\phi_m(n) \ra 
+\phi_n$ as $M \ra \infty$. The data is generated using parameter 
+values from the super-sinusoidal regime and $N=1000$. For this 
+particular data set the largest generated ISI was 6.55 time units.} 
+\label{fig:effect_of_M} 
+\end{center} 
+\end{figure} 
+\begin{figure}[htp] 
+\begin{center} 
+\includegraphics[width=.99\textwidth]{Figs/FP/sdf_init_vs_exact.pdf} 
+\caption[labelInTOC]{The blue curves are the numerically obtained survivor 
+  distributions $\G_\phi$ for the exact parameters in the four regimes (as in 
+  \cref{tab:regimes}) and $\th=1$. The red curves are obtained in the following 
+  manner: Simulations using the true parameters were used to generate sample spikes. 
+  Using these samples, the initializer algorithm was used to generate estimates 
+  for $\a,\b,\g$. Using these estimates, the bell curve discussed in sec.\ 3.4 
+  was formed and evolved in time.  
+  Thus, the red curve drawn in the figures measures the area under 
+  this bell that is to the left of the threshold at time $t$.  
+ A) supra-threshold, B) super-sinusoidal, C) critical, D) sub-threshold.} 
+  \label{fig:sdf_real_vs_init_estimated} 
+\end{center} 
+\end{figure} 
+\begin{figure}[p] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth] 
+{Figs/Estimates/FP_vs_Fortet_100x100_x1000superT_est_rel_errors_joint.pdf} 
+\caption{Boxplots of parameter estimates for the 
+supra-threshold regime. The upper plots (A,B,C) show estimates using $N=100$ sample spikes per 
+estimation, while the lower plots (D,E,F) use $N=1000$. The dashed line 
+indicates the true parameter value, while the red line inside the boxes 
+indicates the median of the estimates. 
+\\ 
+The boxes contain the central 50\% of the estimates. The bars indicate 
+the range of the estimates, except for outliers given by the points 
+outside the bars, and defined to be more than 1.5 times the 
+interquantile range (the height of the box) from the box.} 
+\label{fig:comprehensive_test_SuperT_relerrors} 
+\end{center} 
+\end{figure} 
+\begin{figure}[p] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth]{Figs/Estimates/FP_vs_Fortet_100x100_x1000superSin_est_rel_errors_joint.pdf} 
+\caption{Boxplots of parameter estimates for the 
+super-sinusoidal regime. The upper plots (A,B,C) show estimates using $N=100$ 
+sample spikes per estimation, while the lower plots (D,E,F) use $N=1000$. The dashed line 
+indicates the true parameter value, while the red line inside the boxes 
+indicates the median of the estimates.\\ 
+The boxes contain the central 50\% of the estimates. The bars indicate 
+the range of the estimates, except for outliers given by the points 
+outside the bars, and defined to be more than 1.5 times the 
+interquantile range (the height of the box) from the box.} 
+\label{fig:comprehensive_test_SuperSin_relerrors} 
+\end{center} 
+\end{figure} 
+\begin{figure}[p] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth]{Figs/Estimates/FP_vs_Fortet_100x100_x1000crit_est_rel_errors_joint.pdf} 
+\caption{Boxplots of parameter estimates for the 
+critical regime. 
+The upper plots (A,B,C) show estimates using $N=100$ sample spikes per 
+estimation, while the lower plots (D,E,F) use $N=1000$. The dashed line 
+indicates the true parameter value, while the red line inside the boxes 
+indicates the median of the estimates. 
+\\ 
+The boxes contain the central 50\% of the estimates. The bars indicate 
+the range of the estimates, except for outliers given by the points 
+outside the bars, and defined to be more than 1.5 times the 
+interquantile range (the height of the box) from the box.}   
+\label{fig:comprehensive_test_crit_relerrors} 
+\end{center}     
+\end{figure}  
+\begin{figure}[p]   
+\begin{center} 
+\includegraphics[width=0.99\textwidth]{Figs/Estimates/FP_vs_Fortet_100x100_x1000subT_est_rel_errors_joint.pdf} 
+\caption{Boxplots of parameter estimates for the  
+sub-threshold regime. 
+The upper plots (A,B,C) show estimates using $N=100$ sample spikes per 
+estimation, while the lower plots (D,E,F) use $N=1000$. The dashed line 
+indicates the true parameter value, while the red line inside the boxes 
+indicates the median of the estimates. 
+\\ 
+The boxes contain the central 50\% of the estimates. The bars indicate 
+the range of the estimates, except for outliers given by the points 
+outside the bars, and defined to be more than 1.5 times the 
+interquantile range (the height of the box) from the box.} 
+\label{fig:comprehensive_test_SubT_relerrors} 
+\end{center} 
+\end{figure} 
+\begin{figure}[htp] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth] 
+{Figs/Estimates/FP_vs_Fortet_100x100_cross_compare_joint.pdf} 
+\caption{Estimates based on samples of $N = 100$ spikes obtained from the 
+Fokker-Planck algorithm against the Fortet algorithm for the four different 
+parameter regimes, with parameter values given in table 
+\cref{tab:regimes}, fixing $\th=1$. Each row corresponds to one regime 
+and one set of simulations. Each column corresponds to a parameter, 
+with the specific value indicated above each plot.   
+A,B,C) Supra-threshold; D,E,F) Super-sinusoidal; G,H,I)  
+Critical; J,K,L) Sub-threshold.} 
+\label{fig:comprehensive_tests_cross_comparison} 
+\end{center} 
+\end{figure} 
+\begin{figure}[htp] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth]     
+{Figs/Estimates/FP_vs_Fortet_100x1000_cross_compare_joint.pdf} 
+\caption{Estimates based on samples of $N = 1000$ spikes obtained from the 
+Fokker-Planck algorithm against the Fortet algorithm for the four different 
+parameter regimes, with parameter values given in table 
+\cref{tab:regimes}, fixing $\th=1$. Each row corresponds to one regime 
+and one set of simulations. Each column corresponds to a parameter, 
+with the specific value indicated above each plot.   
+A,B,C) Supra-threshold; D,E,F) Super-sinusoidal; G,H,I)  
+Critical; J,K,L) Sub-threshold.} 
+\label{fig:comprehensive_tests_cross_comparison} 
+\end{center} 
+\end{figure} 
+\begin{figure}[htp] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth]   
+{Figs/Estimates/thetas_100x1000thetas_est_rel_errors.pdf} 
+\caption{Boxplots of parameter estimates for varying $\th$ across $[1, 5, 10, 20]$ while holding $\g / 
+\sqrt{1+\th^2}$ constant as to keep the parameters in the critical 
+regime. 
+A-C) $\th=1$,  D-F) $\th=5$,         
+G-I) $\th=10$, J-L) $\th=20$. 
+\\ 
+The boxes contain the central 50\% of the estimates. The bars indicate 
+the range of the estimates, except for outliers given by the points 
+outside the bars, and defined to be more than 1.5 times the 
+interquantile range (the height of the box) from the box.}   
+\label{fig:comprehensive_test_thetas_relerrors}     
+\end{center} 
+\end{figure}    
+\begin{figure}[htp] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth] 
+{Figs/Estimates/FP_vs_Fortet_thetas_cross_compare_joint.pdf}  
+\caption{Estimates based on samples of $N = 1000$ spikes obtained from the 
+Fokker-Planck algorithm against the Fortet algorithm for a parameter set in the 
+critical regime, while varying $\th$ across $[1, 5, 10, 20]$ and holding  
+$\g / \sqrt{1+\th^2}$ and $\a$ constant. 
+A,B,C) $\th=1$; D,E,F) $\th=5$; G,H,I) 
+$\th=10$; J,K,L) $\th=20$. }  
+\label{fig:comprehensive_test_thetas_cross_compare} 
+\end{center} 
+\end{figure} 
+\begin{figure}[htp] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth]   
+{Figs/Estimates/thetavariation_100x1000_alphagamma_compare_joint.pdf} 
+\caption{Comparison of $\aest$ vs. $\gest$ parameter estimates while varying 
+$\th$ across $[1, 5, 10, 20]$,  holding $\g / \sqrt{1+\th^2}$ constant as to 
+keep the parameters in the critical regime. 
+A,B,C) $\th=1$; D,E,F) $\th=5$; G,H,I) 
+$\th=10$; J,K,L) $\th=20$.    
+} 
+\label{fig:comprehensive_test_thetas_alpha_vs_gamma} 
+\end{center} 
+\end{figure} 
+\clearpage
+\begin{table}[ht]
+
+\begin{center}
+\begin{tabular}{l|ccc}
+Regime Name & $\a$ & $\b$ & $\g$ \\ \hline
+Supra-threshold&1.40&0.30&0.14 \\
+Super-sinusoidal&0.10&0.30&1.98 \\
+Critical&0.50&0.30&0.71 \\
+Sub-threshold&0.40&0.30&0.57 \\
+\end{tabular}
+\caption{Example of $\abg$ parameter values for the different regimes, given $\th = 1$.}
+\label{tab:regimes}
+\end{center}
+\end{table}
+\begin{table}
+
+\begin{center}
+{\begin{tabular}{|c|ccc|} 
+Parameter
+& Initializer
+& Fokker-Planck
+& Fortet
+\\ \hline
+\multicolumn{4}{|c|}{Supra-threshold regime} \\[1mm]
+$\alpha=1.40$
+& $1.43 : [1.29, 1.56]$
+& $1.34 : [1.24, 1.43]$
+& $1.41 : [1.33, 1.49]$
+\\
+$\beta=0.30$
+& $0.17 : [0.10, 0.24]$
+& $0.29 : [0.21, 0.39]$
+& $0.29 : [0.22, 0.36]$
+\\
+$\gamma=0.14$
+& $0.16 : [0.02, 0.33]$
+& $0.12 : [0.02, 0.23]$
+& $0.12 : [0.01, 0.24]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{Super-sinusoidal regime} \\[1mm]
+$\alpha=0.10$
+& $0.92 : [0.83, 1.01]$
+& $0.28 : [0.02, 0.59]$
+& $0.24 : [-0.22, 0.42]$
+\\
+$\beta=0.30$
+& $0.15 : [0.10, 0.25]$
+& $0.31 : [0.14, 0.53]$
+& $0.32 : [0.14, 0.46]$
+\\
+$\gamma=1.98$
+& $1.35 : [1.13, 1.57]$
+& $1.67 : [1.33, 2.05]$
+& $1.77 : [1.44, 2.38]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{Critical regime} \\[1mm]
+$\alpha=0.50$
+& $0.72 : [0.66, 0.80]$
+& $0.57 : [0.32, 0.73]$
+& $0.57 : [0.36, 0.73]$
+\\
+$\beta=0.30$
+& $0.19 : [0.10, 0.26]$
+& $0.27 : [0.17, 0.40]$
+& $0.25 : [0.15, 0.40]$
+\\
+$\gamma=0.71$
+& $0.57 : [0.44, 0.73]$
+& $0.55 : [0.30, 0.83]$
+& $0.62 : [0.38, 0.93]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{Sub-threshold regime} \\[1mm]
+$\alpha=0.40$
+& $0.62 : [0.57, 0.67]$
+& $0.63 : [0.33, 0.84]$
+& $0.58 : [0.03, 1.00]$
+\\
+$\beta=0.30$
+& $0.17 : [0.10, 0.29]$
+& $0.20 : [0.10, 0.37]$
+& $0.19 : [0.00, 0.41]$
+\\
+$\gamma=0.57$
+& $0.32 : [0.00, 0.53]$
+& $0.29 : [0.00, 0.62]$
+& $0.46 : [0.00, 1.19]$
+\\
+\hline
+ \end{tabular}}\\
+\end{center}
+\caption{Averages and empirical 95\% confidence intervals of the estimates for
+$N=100$ spikes per train.}
+\label{tab:est_quantiles_100}
+\end{table}
+\begin{table}
+
+\begin{center}
+{\begin{tabular}{|c|ccc|} 
+Parameter
+& Initializer
+& Fokker-Planck
+& Fortet
+\\ \hline
+\multicolumn{4}{|c|}{Supra-threshold regime} \\[1mm]
+$\alpha=1.40$
+& $1.44 : [1.40, 1.50]$
+& $1.36 : [1.33, 1.40]$
+& $1.40 : [1.37, 1.42]$
+\\
+$\beta=0.30$
+& $0.25 : [0.22, 0.28]$
+& $0.29 : [0.26, 0.32]$
+& $0.30 : [0.27, 0.32]$
+\\
+$\gamma=0.14$
+& $0.14 : [0.10, 0.19]$
+& $0.14 : [0.10, 0.17]$
+& $0.14 : [0.10, 0.18]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{Super-sinusoidal regime} \\[1mm]
+$\alpha=0.10$
+& $0.90 : [0.85, 0.92]$
+& $0.11 : [0.03, 0.29]$
+& $0.10 : [0.03, 0.16]$
+\\
+$\beta=0.30$
+& $0.18 : [0.14, 0.23]$
+& $0.30 : [0.21, 0.34]$
+& $0.31 : [0.22, 0.34]$
+\\
+$\gamma=1.98$
+& $1.26 : [1.16, 1.34]$
+& $1.92 : [1.49, 2.05]$
+& $1.96 : [1.86, 2.07]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{Critical regime} \\[1mm]
+$\alpha=0.50$
+& $0.73 : [0.70, 0.75]$
+& $0.51 : [0.43, 0.63]$
+& $0.53 : [0.45, 0.64]$
+\\
+$\beta=0.30$
+& $0.20 : [0.17, 0.24]$
+& $0.29 : [0.24, 0.32]$
+& $0.28 : [0.19, 0.33]$
+\\
+$\gamma=0.71$
+& $0.54 : [0.44, 0.61]$
+& $0.66 : [0.52, 0.76]$
+& $0.67 : [0.54, 0.77]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{Sub-threshold regime} \\[1mm]
+$\alpha=0.40$
+& $0.62 : [0.55, 0.65]$
+& $0.57 : [0.45, 0.66]$
+& $0.56 : [0.26, 0.71]$
+\\
+$\beta=0.30$
+& $0.20 : [0.17, 0.26]$
+& $0.22 : [0.18, 0.29]$
+& $0.21 : [0.13, 0.35]$
+\\
+$\gamma=0.57$
+& $0.36 : [0.18, 0.44]$
+& $0.36 : [0.25, 0.50]$
+& $0.43 : [0.28, 0.72]$
+\\
+\hline
+ \end{tabular}}\\
+\end{center}
+\caption{Averages and empirical 95\% confidence intervals of the estimates for $N=1000$
+spikes per train. }
+\label{tab:est_quantiles_1000}
+\end{table}
+\begin{table}
+
+\begin{center}
+\subfloat[N=100]{
+\begin{tabular}{c|cc|}
+Regime & Fortet & Fokker-Planck \\
+\hline
+Sub-threshold
+& 1.29 $\pm$ 0.72
+& 0.52 $\pm$ 0.21
+\\
+Supra-threshold
+& 0.83 $\pm$ 0.28
+& 0.18 $\pm$ 0.20
+\\
+Critical
+& 0.94 $\pm$ 0.42
+& 0.36 $\pm$ 0.16
+\\
+Super-sinusoidal
+& 1.36 $\pm$ 0.46
+& 0.43 $\pm$ 0.17
+\\
+\end{tabular}
+}
+\subfloat[N=1000]{
+\begin{tabular}{|c|cc}
+Regime & Fortet & Fokker-Planck \\
+\hline
+Sub-threshold
+& 9.68 $\pm$ 4.98
+& 1.69 $\pm$ 0.91
+\\
+Supra-threshold
+& 3.90 $\pm$ 1.05
+& 0.21 $\pm$ 0.06
+\\
+Critical
+& 10.03 $\pm$ 2.88
+& 1.28 $\pm$ 0.41
+\\
+Super-sinusoidal
+& 10.13 $\pm$ 2.24
+& 1.06 $\pm$ 0.33
+\\
+\end{tabular}
+}
+\end{center}
+\caption{Average times $\pm$ standard deviations in seconds for the algorithm
+in various regimes. Left: $N = 100$ spikes; right: $N = 1000$ spikes.}
+\label{tab:walltimes}
+\end{table} 
+\begin{table}[htp]
+
+\begin{center}
+{\begin{tabular}{|c|ccc|} 
+Parameter
+& Initializer
+& Fokker-Planck
+& Fortet
+\\ 
+\hline \hline
+\multicolumn{4}{|c|}{$\Omega=1$} \\[1mm]
+$\alpha=0.50$
+& $0.73 : [0.69, 0.75]$
+& $0.52 : [0.45, 0.61]$
+& $0.52 : [0.44, 0.62]$
+\\
+$\beta=0.30$
+& $0.20 : [0.17, 0.25]$
+& $0.29 : [0.24, 0.33]$
+& $0.29 : [0.22, 0.34]$
+\\
+$\gamma=0.71$
+& $0.54 : [0.44, 0.62]$
+& $0.64 : [0.53, 0.75]$
+& $0.68 : [0.55, 0.81]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{$\Omega=5$} \\[1mm]
+$\alpha=0.50$
+& $0.88 : [0.76, 0.99]$
+& $0.78 : [0.61, 0.89]$
+& $0.64 : [0.39, 0.99]$
+\\
+$\beta=0.30$
+& $0.24 : [0.17, 0.31]$
+& $0.26 : [0.20, 0.34]$
+& $0.27 : [0.12, 0.34]$
+\\
+$\gamma=2.55$
+& $0.85 : [0.00, 1.65]$
+& $0.92 : [0.00, 1.68]$
+& $1.86 : [0.00, 3.10]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{$\Omega=10$} \\[1mm]
+$\alpha=0.50$
+& $0.90 : [0.78, 0.99]$
+& $0.71 : [0.52, 0.88]$
+& $0.58 : [0.37, 0.86]$
+\\
+$\beta=0.30$
+& $0.25 : [0.18, 0.33]$
+& $0.26 : [0.20, 0.35]$
+& $0.28 : [0.23, 0.32]$
+\\
+$\gamma=5.02$
+& $2.82 : [0.92, 4.38]$
+& $2.72 : [0.95, 3.88]$
+& $4.32 : [1.20, 6.49]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{$\Omega=20$} \\[1mm]
+$\alpha=0.50$
+& $0.93 : [0.76, 1.02]$
+& $0.75 : [0.50, 0.92]$
+& $0.62 : [0.31, 0.97]$
+\\
+$\beta=0.30$
+& $0.27 : [0.20, 0.33]$
+& $0.29 : [0.20, 0.43]$
+& $0.29 : [0.25, 0.33]$
+\\
+$\gamma=10.01$
+& $5.35 : [0.00, 12.29]$
+& $3.98 : [0.00, 6.83]$
+& $7.48 : [0.00, 13.96]$
+\\
+\hline
+\end{tabular}}\\
+\end{center}
+\caption{Averages and empirical 95\% confidence intervals of estimates for $N=1000$
+spikes per train in the critical regime for varying $\th$ across
+[1,5,10,20]. Note that the upper subtable corresponds to the third
+subtable in \cref{tab:est_quantiles_1000}. Numbers differ slightly due to statistical
+fluctuations in the simulations. }
+\label{tab:thetas_est_quantiles_1000}
+\end{table}

@@ -1,0 +1,231 @@
+% %This is a very basic article template. %There is just one section and two
+% subsections.
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amscd}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+% \usepackage{circuitikz}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,snakes,backgrounds} 
+% \usetikz
+\usepackage{subfig}
+
+\usepackage[super]{nth}
+% \usepackage{appendix} \usepackage{listings} \usepackage{color}
+
+\usepackage{hyperref}
+% \usepackage{url}
+
+\usepackage{cleveref}
+
+\usepackage{aviolov_style}
+\usepackage{local_style}
+ 
+\begin{document}
+
+\title{Maximum Likelihood Estimates for the  leaky integrate-and-fire model with
+sinusoidal and stochastic forcing}
+
+\author{Alexandre Iolov, Susanne Ditlevsen and Andr\'e Longtin }
+ 
+\date{\today}
+
+\maketitle
+
+% \maketitle \tableofcontents
+
+\vskip 20pt
+
+\section{Maximum Likelihood Estimation Procedure}
+We detail the maximum likelihood (ML) approach to estimating the parameters
+$\abg$ in the sinusoidal, noisy LIF model as discussed in the main text
+\cite{Iolov2013}. We assume the reader is familiar with the notions and notation
+in \cite{Iolov2013}, most pertinently the material in sec.\ 3.2.
+
+We start by recalling the relationship between the ISI survival density, $g$,
+the survival distribution $\G$ and the Fokker-Planck transition distribution,
+$F$. $$\G_{\phi}(t) = F^{(\phi)}(1,t)$$ and $$g_{\phi}( t)  = -\di_t
+\G_{\phi}(t). $$
+
+Given a set of $N$ observed spikes and phase angles, $(i_n,
+\phi_{n-1})_{n=1}^N$, the ML estimates are obtained by considering the
+log-likelihood function, $L$,
+\begin{equation}
+ L(\a,\b,\g) = \sum_n  \log (
+g_{\phi_{n-1}}(i_n) ) = \sum_n \log \big[ -\di_t F^{\phi_{n-1}}_{\a,\b,\g}(\xth, t) \big] \Big|_{t =
+i_n}. 
+\label{eq:loss_function_MLE}
+\tag{A1}
+\end{equation}
+and maximizing it,$\abgest = \argmax L.$
+Theoretically, one could stop there and start the number crunching. However, for
+each evaluation of $L$ we would have to solve $N$ PDEs for $F$. That might
+become computationally burdensome. Instead, in keeping with the spirit of the
+paper, we choose a set of $M$ representative $\phi$'s $\{\phi_m\}$, chosen as
+the same phase bin midpoints as in the main text, and approximate $\G_\phi$ asa weighted average of $\{F^{\phi_m} \}$.
+
+In particular given $\phi \in [\phi_m, \phi_{m+1}]$, we take a simple
+linear average:
+$$\G_\phi(t) \approx
+\frac{\phi_{m+1} - \phi}{\phi_{m+1} - \phi_{m}} \cdot F^{\phi_m}(t)
++ 
+\frac{\phi - \phi_{m}}{\phi_{m+1} - \phi_{m}} \cdot F^{\phi_{m+1}}(t).
+$$
+The basic idea is that if $\phi \approx \phi_m$ we use $F^{\phi_m}$ and
+conversely if $\phi \approx \phi_{m+1}$ we use $F^{\phi_{m+1}}$.
+Note that this assures that $0 \leq \G \leq 1$.
+
+Finally, recall that $F$ is solved numerically, using a simple finite difference
+to estimate the derivative in \cref{eq:loss_function_MLE}. If a spike time $i_n$
+falls between two time slices $t_k, t_{k+1}$, $i_n \in [t_k, t_{k+1})$ then we approximate $-\di_t F(\xth, i_n)$ as $$ -\di_t F(\xth, i_n)
+\approx -\frac{F(\xth, t_{k+1}) - F(\xth, t_{k})}{t_{k+1} - t_{k}}. $$
+
+Putting it all together, the estimates are obtained as the maximizers of 
+\begin{align}
+\tag{A2}
+\label{eq:loss_function_ML}
+L(\a,\b,\g) = \sum_n  \log \Bigg(
+&-\frac{\phi_{m+1} - \phi}{\phi_{m+1} - \phi_{m}} \cdot 
+\frac{F_{\a,\b,\g}^{\phi_m}(\xth, t_{k+1}) - F_{\a,\b,\g}^{\phi_m}(\xth,
+t_{k})}{t_{k+1} - t_{k}}
+\\&-
+\frac{\phi - \phi_{m}}{\phi_{m+1} - \phi_{m}} \cdot 
+\frac{F_{\a,\b,\g}^{\phi_{m+1}}(\xth, t_{k+1}) - F_{\a,\b,\g}^{\phi_{m+1}}(\xth,
+t_{k})}{t_{k+1} - t_{k}} 
+ \Bigg)
+ \Bigg|_{\substack{i_n \in [t_k, t_{k+1}] \\
+ 			 \phi_{n-1} \in [\phi_m, \phi_{m+1}]}} .
+ 			 \notag
+\end{align} 
+after numerically solving the PDE for $F$, eq. 9 in \cite{Iolov2013}. 
+
+To maximize $L$ we again use the Nelder-Mead optimizer from the SciPy library,
+\cite{scipy}. We also tried the gradient-based optimizers in SciPy (BFGS,
+Truncated Newton, Sequential Least Squares), but they turned out slower and
+provided less accurate estimates.
+  
+\section{ML Estimates}
+We label estimates based on maximizing \cref{eq:loss_function_ML} as ML
+estimates, while estimates obtained by minimizing eq.\ 17 in the main text, \cite{Iolov2013},
+are called FP estimates. Of course, both of them rely on solving the
+Focker-Planck equation, but we do this in order to be consistent with the main text
+where estimates based on eq. 17 are labeled with 'FP'. We summarize the two
+estimators in \cref{tab:estimators}. \begin{table} \begin{tabular}{ccp{4cm}}
+Name & Loss function $L$ & Short description
+\\
+\hline FP &$\sum_{m} N_m \Big\{ \sup_{t} \left| \Gest_{\phi_m}(t) -
+F^{\phi_m}_{\a,\b,\g}(\xth,
+t) \right| \Big \}$ & Minimize the $sup$ of the  differences between a
+numerically calculated survivor distribution and the empirically observed
+survivor function
+\\
+ML & $-\sum_n  \log \Big( g_\phi(i_n)
+ \Big)$
+& Maximize the sum of the log-likelihoods of the observed ISIs
+ 		\\
+\hline  \end{tabular} \caption{The two estimators we compare: the ML estimator
+and  the FP estimator, which has already been discussed at length in the main text,
+\cite{Iolov2013}} \label{tab:estimators} \end{table}
+
+To compare the FP vs.\ ML estimators, we draw cross-plots between
+the two in the same style as figs. 12,13 in the main text,
+\cite{Iolov2013}. As always, we use 100 spike trains to obtain 100
+estimates for $\abg$ using each of the two methods. In all simulations, we set
+$\th = 1$.
+
+We use the same regimes, super-threshold, super-sinusoidal, critical,
+sub-threshold, with the same parameters as in the main text,
+
+We start by using $N=100$ spikes per spike train - see
+\cref{fig:MLCompare_N100}. We use 16 bins for the ML estimate and 8 for the FP.
+The differences between the two methods appear minor. Neither method seems to be
+consistently better than the other. In some cases, the ML estimators are
+noticeably worse - especially for the super-sinusoidal regime, where the ML
+method shows a bimodal distribution of the $\a$ parameter. In other cases, the
+ML estimator has a smaller variance - see $\g$ in the critical regime and maybe
+$\a$ in the supra-threshold regime, but that is already estimated quite
+accurately.
+
+Next, we try using the larger sample size, i.e.\ $N=1000$ spikes per spike train
+- see \cref{fig:MLCompare_N1000}. Again the differences are minor and similar to
+what was seen in the smaller sample size, $N=100$. Most notably the ML is now
+better at estimating $\a$ in the super-sinusoidal regime, except for one rare
+case.
+
+At this point, we would conclude that the performance of the ML and FP
+methods is comparable. However the ML method has the potential advantage that
+one can use much smaller bins (more $\phi_m$s) no matter how big or small the
+data size. This is because the FP method relies on there being a sufficient
+amount of spikes in each bin in order to approximate the survivor distribution,
+while the ML method does not have this requirement.
+
+So as a final comparison we redo the estimation for $N=100$, but now
+we use $M=32$ bins for the ML method while still using only $M=8$ bins for
+FP. The results are in \cref{fig:MLCompare_N100_32bins}. It is evident
+that the differences between using \cref{fig:MLCompare_N100} using 16 bins for
+the ML method and \cref{fig:MLCompare_N100_32bins} using 32 bins are not
+significant.
+
+As a final note, we mention that the computing times for both methods are
+roughly the same, modulo that one uses the same number of bins.
+
+As such we conclude that the FP estimates and the ML estimates behave comparably.
+ 
+\begin{figure}[htp]
+\begin{center}
+  \includegraphics[width=1\textwidth]{Figs/Estimates/MLE_N100_cross_compare_joint.pdf}
+  \caption{Comparison between the FP vs.\ ML
+  estimators in the four regimes, using $N=100$ spikes per sample. We used 8
+  bins for the FP and 16 bins for the ML. In all simulations $\th = 1$.}
+  \label{fig:MLCompare_N100}
+\end{center}
+\end{figure}
+
+\begin{figure}[htp]
+\begin{center}
+  \includegraphics[width=1\textwidth]{Figs/Estimates/MLE_N1000_cross_compare_joint.pdf}
+  \caption[labelInTOC]{Comparison between the FP vs.\ ML
+  estimators in the four regimes, using $N=1000$ spikes per sample. We used 8
+  bins for the FP and 16 bins for the ML. In all simulations $\th = 1$.}
+  \label{fig:MLCompare_N1000}
+\end{center}
+\end{figure}
+% 
+% \begin{figure}[htp]
+% \begin{center}
+%   \includegraphics[width=1\textwidth]{Figs/Estimates/ML_N100_bfgs_cross_compare_joint.pdf}
+%   \caption[labelInTOC]{BFGS, N=100} 
+%   \label{fig:MLCompare_N100_BFGS} 
+% \end{center}
+% \end{figure}
+
+% \begin{figure}[htp]
+% \begin{center}
+%   \includegraphics[width=1\textwidth]{Figs/Estimates/ML_N100_tnc_cross_compare_joint.pdf}
+%   \caption[labelInTOC]{TNC, N=100} 
+%   \label{fig:MLCompare_N100_TNC}
+% \end{center}
+% \end{figure}
+
+\begin{figure}[htp]
+\begin{center}
+  \includegraphics[width=1\textwidth]{Figs/Estimates/MLE_N100_32bins_cross_compare_joint.pdf}
+  \caption{Same as \cref{fig:MLCompare_N100}, but using 32
+  bins for ML instead of 16. $N=100$. In all simulations $\th = 1$.}
+  \label{fig:MLCompare_N100_32bins}
+\end{center}
+\end{figure}
+
+
+
+\bibliographystyle{plain}
+\bibliography{library,local}
+
+\end{document}

@@ -1,0 +1,1683 @@
+% % BioMed_Central_Tex_Template_v1.06 %                                      %
+% bmc_article.tex            ver: 1.06 % %
+ 
+% %IMPORTANT: do not delete the first line of this template %It must be present
+% to enable the BMC Submission system to %recognise this template!!
+ 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% % %% %  LaTeX template for BioMed
+% Central  %% %     journal article submissions %% %                            
+%         %% %         <14 August 2007> %% %                                    
+% %% % %% % Uses:                               %% % cite.sty, url.sty,
+% bmc_article.cls  %% % ifthen.sty. multicol.sty     %% %              %% % %%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% % %% %
+% For instructions on how to fill out this Tex template           %% % document
+% please refer to Readme.pdf and the instructions for    %% % authors page on
+% the biomed central website                      %% %
+% http://www.biomedcentral.com/info/authors/ %% % %% % Please do not use
+% \input{...} to include other tex files. %% % Submit your LaTeX manuscript as
+% one .tex document.              %% % %% % All additional figures and files
+% should be attached             %% % separately and not embedded in the \TeX\
+% document itself.       %% % %% % BioMed Central currently use the MikTex
+% distribution of         %% % TeX for Windows) of TeX and LaTeX.  This is
+% available from      %% % http://www.miktex.org %% % %%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NeedsTeXFormat{LaTeX2e}[1995/12/01] \documentclass[10pt]{bmc_article}
+
+% JOURNAL PACKAGES: 
+
+% Load packages
+\usepackage{cite} % Make references as [1-4], not [1,2,3,4]
+\usepackage{url}  %Formatting web addresses  
+\usepackage{ifthen}  % Conditional
+\usepackage{multicol}   %Columns \usepackage[utf8]{inputenc} %unicode support
+% \usepackage[applemac]{inputenc} %applemac support if unicode package fails
+% \usepackage[latin1]{inputenc} %UNIX support if unicode package fails
+\urlstyle{rm}
+ 
+ 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% % %% %  If you wish to
+% display your graphics for   %% %  your own use using includegraphic or      
+% %% %  includegraphics, then comment out the      %% %  following two lines of
+% code.               %% %  NB: These line *must* be included when     %% % 
+% submitting to BMC. %% %  All figure files must be submitted as      %% % 
+% separate graphics through the BMC          %% %  submission process, not
+% included in the    %% % submitted article.                         %% % %%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\setlength{\topmargin}{0.0cm}
+\setlength{\textheight}{21.5cm}
+\setlength{\oddsidemargin}{0cm} 
+\setlength{\textwidth}{16.5cm}
+\setlength{\columnsep}{0.6cm}
+
+\newboolean{publ}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% % %% % You may change the
+% following style settings  %% % Should you wish to format your article       %%
+% % in a publication style for printing out and  %% % sharing with colleagues,
+% but ensure that     %% % before submitting to BMC that the style is   %% %
+% returned to the Review style setting.        %% %                             
+%                 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TODO:
+% return to review style Review style settings
+\newenvironment{bmcformat}{\begin{raggedright}\baselineskip20pt\sloppy\setboolean{publ}{false}}{\end{raggedright}\baselineskip20pt\sloppy}
+%Publication style settings
+%\newenvironment{bmcformat}{\fussy\setboolean{publ}{true}}{\fussy}
+%New style setting
+% \newenvironment{bmcformat}{\baselineskip20pt\sloppy\setboolean{publ}{false}}{\baselineskip20pt\sloppy}
+
+% MY PACKAGES: 
+\usepackage{amsmath}
+\usepackage{amscd}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+\usepackage{circuitikz}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,snakes,backgrounds}
+% \usetikz
+\usepackage{subfig}
+
+\usepackage[super]{nth}
+% \usepackage{appendix}
+% \usepackage{listings}
+% \usepackage{color}
+
+\usepackage{hyperref}
+%\usepackage{url}
+
+\usepackage{cleveref}
+
+\usepackage{aviolov_style}
+\usepackage{local_style}
+
+\begin{document}
+\begin{bmcformat}
+
+\title{Fokker-Planck and Fortet equation-based parameter estimation for a
+leaky integrate-and-fire model with sinusoidal and stochastic forcing} 
+
+\author{Alexandre Iolov\correspondingauthor$^{1,2}$,
+	\email{ai\correspondingauthor - aiolo040@uottawa.ca}
+Susanne Ditlevsen$^2$ \email{sd - susanne@math.ku.dk} 
+and
+Andr\'e Longtin$^1$  
+\email{al - alongtin@uottawa.ca}
+}
+\address{%
+    \iid(1)Department of Mathematics and Statistics, University of Ottawa, Ottawa, Canada 
+\\
+    \iid(2)Department of Mathematical Sciences, University of Copenhagen,
+Copenhagen, Denmark
+}
+
+\date{\today}
+
+\maketitle 
+
+% Do not use inserted blank lines (ie \\) until main body of text.
+\begin{abstract} 
+{  
+Analysis of sinusoidal noisy leaky integrate-and-fire models and
+comparison with experimental data are important to understand the neural
+code and neural synchronization and rhythms. In this paper we
+propose two methods to estimate input parameters using interspike interval data only. 
+One is based on numerical 
+solutions of the Fokker-Planck equation, and the other is based on an
+integral equation, which is fulfilled by the interspike interval
+probability density. This generalizes previous methods tailored to
+stationary data to the case of time-dependent input. The main
+contribution is a binning method to circumvent the problems of
+non-stationarity, and an easy-to-implement initializer for the numerical
+procedures. The methods are compared on simulated data.}
+\end{abstract}
+
+\medskip\noindent\textbf{\textit{Keywords:}}
+first-passage times, stochastic neuron models, parameter estimation from
+stopping times, Fortet integral equation, Fokker-Planck equation.
+
+
+\ifthenelse{\boolean{publ}}{\begin{multicols}{2}}{}
+
+% \def\includegraphic[]{}
+% \def\includegraphics[]{} 
+
+\section{Introduction}
+Information processing in the nervous system is carried out by spike timings in
+neurons. To study the neural code in such a complicated system, a first step is
+to understand signal processing and transmission in single neurons. Stochastic
+leaky integrate-and-fire (LIF) neuronal models are a good compromise between
+biophysical realism and mathematical tractability, and are commonly applied as
+theoretical tools to study properties of real neuronal systems. A central issue
+is then to perform statistical inference from experimental data and estimate
+model parameters. Many electrophysiological experiments on neurons, namely
+extra-cellular recordings, are only capable of detecting the time of the spike
+and not the detailed voltage trajectory leading up to the spike. Estimating the
+parameters of the LIF model from this type of data is equivalent to estimating
+the parameters of a stochastic model from the statistics of the first-passage
+times only. A common assumption is that the data are well described by a renewal
+process, thus basing the statistical inference on the interspike intervals
+(ISIs), assuming these are realizations of independent and identically
+distributed random variables. Since only partial information about the process
+is available, the statistical problem becomes more difficult, and no explicit
+expression for the likelihood is available. 
+
+Different methods have been
+proposed. In the seminal paper \cite{Brillinger1988}, a point process approach
+is proposed. The spike trains of a collection of neurons are 
+represented as counting processes. Time is discretized and the point processes
+approximated by 0-1 time series. Then the probability of firing in the
+next time interval is modeled as a function of the
+spike history. In this way maximum likelihood
+estimation is feasible. External stimuli are not considered. 
+In \cite{Inoue1995} a numerically involved moment method is
+developed. It uses the first two moments of the first-passage times of
+the Ornstein-Uhlenbeck process to a constant threshold, which are
+given as series expressions, and equates them to their empirical
+counterparts. In
+\cite{DitlevsenLansky2005,DitlevsenLansky2006} certain explicit 
+moment relations derived from the Laplace transform of the first-passage time
+distribution are applied, but these are only valid under 
+stimulation (supra-threshold regime). In \cite{Mullowney2008} inference is based on
+numerical inversion of the Laplace transform. In \cite{Zhangetal2009}, a
+functional of a 3-dimensional Bessel bridge is applied to obtain a maximum
+likelihood estimator. None of these methods
+are feasible to extend to the
+non-timehomogenous case, which is of our interest. In \cite{Ditlevsen2008,Ditlevsen2007} an
+integral equation is used to derive an estimator in the
+time-homogenous setting. This approach is readily extended to time
+varying input, which we will explore in this paper. Some of the above methods are compared in
+\cite{Ditlevsen2008a}. Finally, a review of estimation methods is provided in
+\cite{Lansky2008}. 
+%We provide more details on previous methodologies in
+%\cref{sec:estimation_algos} below.
+
+Many sensory stimuli, like sound, contain an oscillatory component
+\cite{Braunetal1994,Chacron2000}. Such inputs will cause oscillating membrane
+potentials in the neuron, generating rhythmic spiking patterns. The oscillation
+frequency determines the basic rhythm of spiking, and is considered to be
+significant for neuronal information processing. The dynamics of periodically
+forced neuron models have been extensively studied, see
+\cite{Bulsaraetal1996,Burkitt2006b,Lansky1997,Longtingetal1994,SacerdoteGiraudo2013,Shimokawa2000}
+and references therein. Even so, attempts to solve the estimation problem in
+these non-stationary settings have been rare. One problem is that the ISIs are
+no longer independent nor identically distributed. In
+\cite{Paninski2004} a more complicated model with linear filters is considered, allowing
+also for the spike history to influence the membrane potential
+dynamics. The estimation problem is solved through numerical solutions to the
+Fokker-Planck equation, and it is shown that the log-likelihood is
+concave, thus ensuring a global maximum, see also
+\cite{Dong2011,Sirovich2011a}. Because their model is more involved,
+some approximations to the solution of the Fokker-Planck equation is
+applied, to ensure acceptable computing times. We will apply the full 
+Fokker-Planck equation to solve our estimation problem, since the
+computing time is always lower than 2 seconds for a sample size of
+1000 spikes.   
+  
+
+In this paper, we thus describe and discuss two methods to estimate parameters
+of LIF models with the added complexity of a time-varying input current. We
+assume that the time-varying current is a sinusoidal wave, but we believe that
+the approaches generalize to an arbitrary periodic forcing with known frequency.
+One approach relies on the Fortet integral equation, which is readily extended
+to the time non-homogeneous case. An advantage of this approach is that if the
+transition density of the diffusion in the LIF model is known, as is the case
+for the Ornstein-Uhlenbeck and the Feller model, the computational burden is
+limited. A second approach involves numerical solution of the Fokker-Planck
+equation, where the time-dependence is explicitly accounted for. After a
+numerical differentiation, the likelihood function can be calculated providing
+the maximum likelihood estimator. Nevertheless, we chose an alternative loss
+function which seem marginally more robust, directly comparing the survival
+function provided by the solution of the Fokker-Planck equation with its
+empirical counterpart. The two approaches give similar results and they are more
+carefully compared in the supplementary online material.
+Both methods need sensible starting values for the optimization
+algorithms, and we provide an easy-to-implement initializer. The estimation
+procedures are compared on simulated data and we find that both algorithms are
+able to find estimates close to the true values for several different dynamical
+regimes. We find that for small sample sizes the Fokker-Planck algorithm can be
+considered marginally preferable, whereas for larger sample sizes the Fortet
+algorithm becomes marginally superior. Moreover, at high frequencies of the
+sinusoidal forcing, the Fortet is better at identifying the parameters, though in general
+there is less information in the data to distinguish between a constant input
+and the amplitude of the periodic forcing.
+
+\section{Model}
+The time evolution of the voltage of a spiking neuron is modelled by a
+stochastic process, $V$, given as solution to the following stochastic
+differential equation (SDE)
+\begin{equation}
+\begin{gathered}
+\intd{V}(t) = \left(\m - \frac{V(t)}{\t} +  A \sin(\o t ) \right) \intd{t} + \s
+\intd{W}(t),
+\\
+t_0 = 0; \quad V(t_0) = v_0,
+\\
+t_{n } = \inf \{ t > t_{n-1} : V(t) = \vt \} \quad \text{for } n \geq 1
+\\
+\begin{cases}
+V(t_n^+) = v_0 &  
+\\
+J_n = t_n-t_{n-1} .
+% \\
+% \phi_{n+1} = t_n \mod 2 \pi
+\end{cases}
+\end{gathered}
+\label{eq:v_evolution_uo}
+\end{equation}
+Here, $\mu$ is a bias current acting on the cell, $\t$ is the decay time, $A$
+and $\o$ are the amplitude and (angular) frequency of the sinusoidal current
+acting on the cell, $\s$ is the strength of the stochastic fluctuations, $W =
+\{W_t\}_{t\geq0}$ is a standard Wiener process, and $t_n^+$ denotes the right
+limit taken at $t_n$. A spike occurs when the membrane voltage $V(t)$ crosses a
+voltage threshold, $\vt$, and then $V(t)$ is instantaneously reset to the
+resting potential $v_0$. The difference between subsequent spike times, $J_n =
+t_{n} - t_{n-1}$, is called the interspike interval (ISI).
+
+We will assume that $\t$ is known (but see \cref{sec:discusion} for a discussion
+of the alternative) and non-dimensionalize \cref{eq:v_evolution_uo} as follows
+\begin{align*}
+s &= \frac{t}{\t}	& 
+X_s &= \frac{V(t) - v_0}{\vt - v_0}&
+W_s &= \frac{W(t)}{\sqrt \t}	&
+\xth&= 1
+\\
+\a &= \frac{\m \t}{\vt - v_0}	&
+\b &= \frac{\s\sqrt{\t}}{\vt-v_0}	&
+\g &= \frac{A \t}{ \vt - v_0 }	&
+\th &= \o \t \notag
+% \label{defn:nond_params}
+\end{align*}
+to obtain
+\begin{equation}
+\begin{gathered}
+dX_s = (\a - X_s + \g \sin( \th s ) ) \intd{s} + \b \intd{W_s},
+\\
+s_0 = 0; \quad X_{s_0} = 0,
+\\
+s_{n } = \inf \{ s > s_{n-1} : X_s = \xth =1 \} \quad \text{for } n \geq 1 
+\\
+\begin{cases}
+X_{s_n^+} = 0 &  
+\\
+I_n = s_n-s_{n-1} ,
+% \\
+% \phi_{n+1} = t_n \mod 2 \pi
+\end{cases}
+\end{gathered}
+\label{eq:X_evolution_uo}
+\end{equation}
+where we have defined $I_n = J_n / \t$. We can also write the dynamics between two spike times $s_n$ and $s_{n+1}$ in terms of elapsed time since
+the last spike, $s' = s- s_n$, $s' < I_{n+1}$,
+\begin{equation}
+\begin{gathered}
+dX_{s'} = (\a - X_{s'} + \g \sin( \th (s' + \phi_n ) ) \intd{s'} + \b
+\intd{W_{s'}},
+\\
+\begin{cases}
+s' &= s - s_n
+\\
+ \phi_n &= s_n \mod \tfrac{2 \pi}{\th}
+\end{cases}
+\end{gathered}
+\label{eq:X_evolution_uo_renewal}
+\end{equation}
+This form of the dynamics highlights that this is not a renewal process since
+different trajectories between spikes have different phase shifts $\phi_n = s_n$
+modulo ${2 \pi}/{\th}$. This will be important in the following discussion. The
+shape of the ISI distribution depends on the model parameters, and it is natural
+to divide the parameter space in different regimes characterized by their
+qualitative behaviour. Four distinct parameter regimes will be considered;
+supra-threshold, critical, sub-threshold and super-sinusoidal. 
+To understand the reasoning behind the regime names, observe that in the absence
+of noise, $\b=0$, the deterministic model will produce spikes if and only if $$
+\a + \frac{\g}{\sqrt{1 + \th^2} } > 1, $$ see the discussion in
+\cite{Burkitt2006b}, which can be directly inferred from the solution in
+\cref{eq:LIF_deterministic_solution} below. In both the supra-threshold and
+super-sinusoidal regimes, $ \a + \g/\sqrt{1 + \th^2}  > 1$. The
+difference between the two is that in the supra-threshold regime the constant
+bias current alone is sufficient for spikes to occur, also in absence of noise,
+that is,  $\a > 1$. In the super-sinusoidal regime the sinusoidal current is
+necessary for spikes to occur in absence of noise, that is, $\alpha +
+\gamma /
+\sqrt{1+\Omega^2} > 1$ and $\alpha \leq 1$. In the critical regime, the sum of
+the two terms is just barely enough to guarantee deterministic spiking, that is
+$\a + \g / \sqrt{1 + \th^2}  \approx 1$. Finally, in the sub-threshold regime,
+there would be no spikes without the noise, $ \a + \g / \sqrt{1 + \th^2} < 1$.
+
+\Cref{tab:regimes} tabulates examples of corresponding parameter values for each
+regime, while \cref{fig:trajectory_examples} shows examples of individual
+voltage trajectories and their associated spike trains.
+\Cref{fig:4regimes_illustrated_SDF,fig:4regimes_illustrated_PDF} illustrate
+ how each regime behaves for selected $\phi$'s by plotting the survivor
+ distribution, $\G_{\phi}(t)$, and the probability density, $g_{\phi}(t)$, both
+ defined in \cref{eq:ISI_distribution_functions} below.
+ 
+With regards to
+\cref{fig:4regimes_illustrated_SDF,fig:4regimes_illustrated_PDF}, it is worth
+noting explicitly, that combinations of noise and sinusoidal forcing can cause
+firing patterns in which spikes are phase locked, but skip a certain number of
+cycles. This leads to multi-modal ISI densities. There are many different
+dynamical mechanisms that can yield such patterns, and the particular
+correlations between the ISIs will depend on the underlying voltage dynamics
+(which, in our case, we assume to be given by \cref{eq:v_evolution_uo}); in
+particular, it may be difficult to distinguish whether the dynamics are
+sub-threshold or supra-threshold, since both can show similar ISI densities,
+see \cite{Longtin1995}.
+
+ 
+% #PDF: 
+
+\clearpage
+
+\subsection{Basic ISI probability density functions}
+Here we introduce the notation for the  probability density, distribution and
+survival functions of $I_n$, an ISI arising from a trajectory
+produced by \cref{eq:X_evolution_uo_renewal},
+\begin{equation} 
+\begin{array}{rcll}
+g_{\phi}(\t) \intd{\t} &:=& \Prob(I_{n+1} \in [\t, \t + \intd{\t})  | \phi_n =
+\phi) &
+ \textrm{(probability density)} 
+\\ 
+G_{\phi}(t) &:=& \Prob(I_{n+1} \leq t  |\phi_n = \phi ) = \int_0^t g_{\phi}(\t)
+\intd{\t} &
+ \textrm{(cumulative distribution)}
+\\
+\G_{\phi}(t) &:= & \Prob(I_{n+1}>t | \phi_n = \phi ) = 1 - G_{\phi}(t)
+&
+ \textrm{(survivor distribution)}
+\end{array}
+\label{eq:ISI_distribution_functions}
+\end{equation}
+The subscript $\phi$ is to stress that $g, G$ and $\G$ depend on the value of
+$\phi_n$ in \cref{eq:X_evolution_uo_renewal}. This is the formal statement that
+in a sinusoidally-driven neuron, the interspike intervals are not identically
+distributed, and are only independent conditioned on the sinusoidal phase at an
+interval's onset. Knowing these distributions would provide the likelihood function,
+offering estimation by the preferred method of choice, the maximum likelihood
+estimator. Unfortunately, explicit expressions for the ISI distribution are not
+available except for the special case of $\g = 0$ and $\a=1$ , see
+\cite{DitlevsenLansky2005}. Different representations of the likelihood function
+are available though, see \cite{Alili2005}, one of which we will use below.
+
+\subsection{Fokker-Planck Equation with Absorbing Boundaries}
+\label{sec:fp_estimation}
+The Fokker-Planck equation is a partial differential equation (PDE) describing
+the evolution of the probability density, $f(x,t)$, of $X_t$. 
+For the sinusoidally-forced Ornstein-Uhlenbeck process,
+\cref{eq:X_evolution_uo_renewal}, with the threshold $x_{th} = 1$, the PDE is
+\begin{equation}
+\di_t f^{(\phi)}(x,t) = -\di_x[(\a - x + \g \sin(\th (t + \phi))\cdot
+f^{(\phi)}] +\di^2_x[ \tfrac{\b^2}{2}f^{(\phi)}], \quad x \in (-\infty,
+1).
+\label{eq:FP_pde_OU_absorbBC}
+\end{equation}
+Due to the reset, we have that at time $t=0$, $X_t=0$  and so for the initial
+conditions we can write
+\begin{equation}
+f^{(\phi)}(x,t=0) = \delta(x) ,
+\label{eq:PDF_ICs}
+\end{equation}
+where $\delta(\cdot)$ is the Dirac delta function. The spike is represented as
+a zero boundary condition for $f$ at $x = 1$ $$
+f(1, t) =0.
+$$
+
+The natural way of using the Fokker-Planck equation in first-hitting-times
+problems is as follows. Denote the integral of $f^{(\phi)}$ by $F^{(\phi)}(x,t)
+= \int_{\xi \leq x} f^{(\phi)}(\xi, t) \intd{\xi}$. $F^{(\phi)}(x,t)$ can be
+related to the ISI's survivor distribution function, $\G_{\phi}(t)$, by
+\begin{equation}
+\G_{\phi}(t) = F^{(\phi)}(1,t).
+\label{eq:SDF_vs_F_at_thresh}
+\end{equation}
+\Cref{eq:SDF_vs_F_at_thresh} forms the
+basis of one of the methods below for estimating the structural parameters from
+the observed data.
+
+Since \cref{eq:FP_pde_OU_absorbBC} has to be solved numerically, we will need to
+truncate its domain from below. The most natural way to do this, given the
+dynamics, is to impose reflecting boundary conditions at some $x=\xmin \ll
+(\a-\g/\sqrt{1+\th^2})$ where the probability mass is very small. For the left
+(lower) limit of the computational domain, we use the formula $$ \xmin =
+\min(\underbrace{\a -\g/\sqrt{1+\th^2}}_{\textrm{mean}} - 2 \underbrace{\b/
+\sqrt{2}}_{\textrm{std. dev}}, -0.25).$$ This choice requires some explanation.
+In the $t\ra \infty$ limit, the distribution of $X_t$ in
+\cref{eq:X_evolution_uo_renewal} {\sl without} thresholding is Gaussian with
+mean given by \cref{eq:LIF_deterministic_solution} (below) and variance equal to
+$\beta^2/2$. Thus to truncate the computational
+domain for the thresholded process from below, we take the lowest value of
+the asymptotic mean, $\alpha - \gamma / \sqrt{1 + \th^2}$, then from
+this we subtract two standard deviations, $2\b/\sqrt{2}$ and set the result to be the lowerbound, $\xmin$. Finally, if this value for $\xmin$ happens to be larger than
+$-.25$, we enforce that  $\xmin \leq -0.25$. 
+
+% The reflecting BCs look like:
+% \begin{equation}
+% \big[ -(\a - x + \g \sin(\th (t + \phi) ) \cdot f + 
+% 	\frac{\b^2}{2} \cdot \di_x f \Big] \Big|_{x=c} = 0.
+% \label{eq:reflecting_BCs}
+% \end{equation}
+
+Numerical considerations lead us to solve for $F$, instead of $f$, since delta
+functions are difficult to represent in floating point, while the initial
+conditions for $F$, the Heaviside step function, $H(x)$, faces no such
+difficulties \cite{Hurn2005}. The Heaviside step function is defined to be
+equal to $0$ for $x<0$ and to be equal to $1$ for $x \geq 0$. At this point we
+need to derive the PDE for the distribution $F$, starting from the PDE for the
+density, $f$, \cref{eq:FP_pde_OU_absorbBC}.
+
+First, at the lower boundary, it is intuitive that the distribution should be
+zero, $ F(\xmin,t) = 0 $, while $f(1,t) = 0$ implies that at the upper boundary
+$ \di_xF(1, t) = 0 $. Inside the domain, the PDE itself reformulates as
+\begin{eqnarray*}
+\di_t f(x,t) &=&  \di_x \left[\frac{1}{2}\di_x [\b^2 f] -  (\a - x + \g \sin(\th
+(t - \phi)) f \right]
+\end{eqnarray*}
+so that
+\begin{eqnarray*}
+\di_x \di_t F(x,t) &=& \di_x \left[
+\frac{\b^2 }{2}\cdot \di^2_x F -  
+						(\a- x + \g \sin(\th (t + \phi))  \cdot \di_xF \right].
+\end{eqnarray*}
+Integrating with respect to $x$ then gives
+$$
+\di_t F(x,t) =
+\frac{\b^2 }{2}\cdot \di^2_x F -  
+						(\a- x + \g \sin(\th (t + \phi))  \cdot \di_xF + C(t)
+$$
+where $C(t)$ is a constant of integration depending on $t$. Now consider
+the lower boundary condition, $x =
+\xmin$. Here $F(\xmin,t) = 0$ implies that $\di_tF = 0$ and so 
+\begin{equation}
+C(t) = - \left[ \frac{\b^2 }{2}\cdot \di^2_x F -  
+			(\a- x + \g \sin(\th (t + \phi))  \cdot \di_xF \right].	
+\label{eq:const_of_integration}
+\end{equation}
+The right-hand side in eq.\ \eqref{eq:const_of_integration} is precisely the
+reflecting boundary condition on $f$ once we recall that $\di_x F = f$. Therefore $C(t) \equiv 0$.
+
+Thus, the fully specified PDE for $F$, which we will be solving frequently in what
+follows, is
+\begin{equation}
+\begin{gathered}
+	\di_t F^{(\phi)}(x,t) =
+					\frac{\b^2 }{2}\cdot \di^2_x F^{(\phi)} -  
+					\Big(\a- x + \g \sin(\th (t + \phi))\big)  \cdot \di_x F^{(\phi)},
+	\\
+	\\
+	\left\{ \begin{array}{lcl}
+	 F^{(\phi)}(x,0) &=& H(x)
+	\\
+	F^{(\phi)}(x,t) |_{x=\xmin} &\equiv& 0 
+	\\
+	\di_x F^{(\phi)}(x,t) |_{x=\vt} &\equiv& 0.
+	\end{array} \right.
+\label{eq:FP_pde_OU_absorbBC_CDF}
+\end{gathered}
+\end{equation}
+Numerical solutions for \cref{eq:FP_pde_OU_absorbBC_CDF} are shown in
+\cref{fig:FP_pde_OU_absorbBC_CDF}. We have used the standard Crank-Nicholson
+finite-difference algorithm (central-differences in space with equally weighted
+implicit-explicit terms in time, see \cite{Karniadakis2003}). 
+
+
+\subsection{Fortet Equation}
+\label{sec:fortet_estimation}
+Consider a general form of \cref{eq:X_evolution_uo_renewal}, $$ dY_t =
+b(t,Y_t)dt + \sigma(t,Y_t) dW_t. $$ Let $\F(y,t| y_0, t_0) :=   \Prob[Y_t \leq
+y| Y_{t_0} = y_0]$ be the transition cumulative distribution of $Y$. Note that
+this is the distribution of $Y_t$ in absence of a threshold, different from the
+distribution given in \cref{eq:SDF_vs_F_at_thresh},
+ which is the distribution 
+of the process constrained to be below the threshold. 
+Now consider an arbitrary time-dependent threshold $\vt(t)$. The Fortet
+equation, see \cite{Fortet1943}, convolves the first-hitting time probabilities,
+$g(t)$, with the transition density of the process. Integrating
+over $(-\infty, \vt(t))$, we obtain
+\begin{equation}
+1 - \F(\vt(t), t|v_0, 0) =
+\int_0^t g(\tau) [1-\F (\vt(t),  t| \vt(\t), \t)] \intd{\t}.
+\label{eq:Fortet_moving_vth}
+\end{equation}
+The left hand side is simply the probability of exceeding $\vt$ at time
+$t$ starting at $v_0$ at time $0$. This can also be written as the probability
+of hitting $\vt$ for the first time at time $\t < t$ and then exceeding
+$\vt$ at time $t$ starting at $\vt$ at time $\t$, integrated over all $\t$.
+% Strictly speaking, \cref{eq:Fortet_moving_vth} is not the Fortet equation, but
+% the integral of the Fortet equation, while the original Fortet equation uses
+% $\phi(x,t) = \di_x \F(x,t)$; we use the integrated version for numerical
+% convenience.
+
+The Fortet equation is particularly appealing to use when we have an analytical
+expression for $\F$. For the problem at hand, $\Phi$ is complicated
+due to the time-dependent forcing. However, the following transformation yields
+a time-homogeneous $Y$ for which $\Phi$ will be tractable, along with an associated
+moving threshold, $\vt(t)$. This makes feasible
+the use of the Fortet equation. To obtain this transformation, cf.\
+\cite{Shimokawa1999}, consider the deterministic version of the SDE in
+\cref{eq:X_evolution_uo_renewal} 
+\begin{equation}
+dv(t) = \left( \a - v + \g \sin(\th (t + \phi) ) \right) \intd{t},
+\label{eq:LIF_deterministic}
+\end{equation}
+$$v(0) = 0
+$$
+with solution
+\begin{equation}
+v(t) = \a( 1- \exp(-t)) 
+  + \frac{\g}{\sqrt{1+\th^2}} 
+\left[  \sin(\th(t + \phi) - \psi )
+ - \exp(-t)\sin(\phi\th - \psi ) \right]; \quad  
+\psi = \arctan(\th).
+\label{eq:LIF_deterministic_solution}
+\end{equation}
+
+Now take $X_t$, the solution to \cref{eq:X_evolution_uo_renewal} and
+$v(t)$, \cref{eq:LIF_deterministic_solution}, and 
+let $Y_t = X_t - v(t)$. Then
+\begin{equation}
+dY_t = -Y_t dt + \b \intd{W},
+\label{eq:Y_evolution_uo_transformed}
+\end{equation}
+which has the time and parameter dependent threshold
+\begin{equation}
+\vt_{\{\a,\g;\phi\}}(t) = \vt - v(t).
+\end{equation}
+That is, $X_t$ hits the constant threshold $\vt$ if and only if $Y_t$ hits the
+moving threshold $\vt_{\{\a,\g;\phi\}}(t)$, where the subindex
+indicates the dependence on $\a,\g$ and $\phi$. Therefore the ISIs produced by $X$ and $Y$
+are the same and so are their distributions. Thus, $g_\phi(\t)$ satisfies
+\begin{equation}
+1 - \F_{\{\b\}}(\vt_{\{\a,\g;\phi\}} (t), t|0, 0) =
+\int_0^t g_{\phi} (\tau)
+\left[1-\F_{\{\b\}} \left(\vt_{\{\a,\g;\phi\}} (t),  t|
+						  \vt_{\{\a,\g;\phi\}} (\t), \t ) \right)
+      \right] \intd{\t},
+\label{eq:Fortet_moving_vth}
+\end{equation}
+where 
+$$
+\F_{\{\b\}}(y,t| y_0, t_0) = \frac{1}{ \sqrt{\pi \b^2(1-e^{-2(t-t_0)}) }}
+\int_{-\infty}^{y} \exp \left( -\frac{(x - y_0e^{-(t-t_0)})^2}
+							         {\b^2(1-e^{-2(t-t_0)})} \right) \intd{x}
+$$
+is the conditional cumulative distribution function of $Y_t$ defined in
+\cref{eq:Y_evolution_uo_transformed}.
+
+\section{Parameter Estimation Algorithms}
+\label{sec:estimation_algos}
+The unknown parameters in \cref{eq:X_evolution_uo_renewal} are $\a,\b$ and $\g$,
+while we assume $\th$ known. The reason why the amplitude, $\g$, is often
+unknown while the frequency, $\th$, is known is that one can usually observe the
+sinusoidal input and thus its frequency. Further, the encoding of the input into
+neuronal firing patterns often involves phase locking to the sinusoidal
+component. However, the actual forcing amplitude at the level of the neuron is
+usually modified by various synaptic and other filtering processes, unless the
+cell receives direct sinusoidal current injection.
+
+Our goal is to estimate the structural parameters $(\abg)$ from a sample of
+spike time data, $\{i_1,\ldots,i_N\}$. There are several algorithms for
+estimating the parameters for the simpler and more common case of $\g = 0$. One
+such algorithm relies on the Fortet equation, see
+\cite{Ditlevsen2008,Ditlevsen2007}, which we extend to the presence of a
+time-varying current. A more basic approach is to directly solve the
+Fokker-Planck equation for the probability density of $X_t$,
+\cite{Sirovich2011a,Paninski2004,Dong2011}, from which one can derive the
+survival distribution of $I_n$ and use this to compare against the empirical
+survival distribution of $I_n$ obtained from data. An approximate maximum
+likelihood approach is also possible by numerical differentiation. The relation
+between Fokker-Planck equations and the first-passage time problem is discussed
+in most introductory books on stochastic analysis, see, for example,
+\cite{Jacobs}. A recent review of this approach for the simple $\g=0$ case in
+neuronal modeling can be found in \cite{Sirovich2011a}, wherein the first
+passage problem is discussed at great lengths in the context of spiking neurons.
+We will use this in \cref{sec:fp_estimation}. A more elaborate approach using
+the Fokker-Planck equation to approximate the hitting time distribution is given
+in \cite{Lo2006}. The techniques in \cite{Lo2006} avoid the need to compute the
+Fokker-Planck PDE numerically, instead approximating it with analytically known
+solutions. This approach might offer significant computational savings, but
+since this would at most amount to a computational speed-up of our algorithm, we
+have left this unexplored for now.
+
+The immediate problem in generalizing the aforementioned approaches to the case
+of $\g \neq 0$ is that the $I_n$'s are no longer identically distributed since
+the phase $\phi_{n-1}$ of the $n$th interval $I_n$ depends on $t_{n-1}$, the
+time the previous spike occurred. The $I_n$'s are also dependent, but conditionally
+independent given $\phi_{n-1}$. So the trajectories in each interval are
+parametrized by the value of $\phi_{n-1}$ at the time of the last spike/reset.
+We overcome this obstacle by splitting the $I_n$'s in groups, and
+approximating the $I_n$'s within groups as coming from identically
+distributed trajectories in a sense to be specified below. This approximation
+which solves the challenge of dependent and non-identically distributed ISIs is
+the primary contribution of this paper.
+\subsection{$\phi$ - binning}
+Before we can use \cref{eq:FP_pde_OU_absorbBC_CDF} or
+\eqref{eq:Fortet_moving_vth}, we need to deal with the fact that $\phi$ is not
+fixed, but instead each $I_n$ starts with a distinct $\phi_n$. Our approach is
+to partition the interval $[0, 2 \pi/\th]$ into $M$ bins, where $M \ll N$, and
+represent each bin by the midpoint of the bin, $\phi_m$. Then we approximate the
+$N$ observed $\phi_n$'s by the closest $\phi_m$ and pretend that any observed
+$I_n$ was not produced by a trajectory of the form in
+\cref{eq:X_evolution_uo_renewal} with $\phi = \phi_n$, but with $\phi = \phi_m$.
+Our hope is that for a judicious choice of $M$, we can balance the error of
+$\phi_n \neq \phi_m$ with having enough data points in each bin in order to
+obtain a useful estimate from \cref{eq:FP_pde_OU_absorbBC_CDF} or
+\eqref{eq:Fortet_moving_vth}.
+
+There is clearly much freedom in how one sets up these bins, but we will do the
+simplest thing and make them all of equal width, $\dphi = 2 \pi / {(\th M)}$.
+Each $\phi_n$ will belong to one and only one of the bins $ [\phi_m - \dphi/2,
+\phi_m + \dphi/2)_{m=1}^M, $ with centre points $ \phi_m = \dphi / 2 + (m-1)
+\dphi$, for $m = 1,\ldots, M$. Thus, given an empirically observed $I_n$ with
+associated $\phi_n$, we will pretend that it was produced by the process $$ dX_s
+= (\a - X_s) \intd{s}  + \g \sin(\th (s+\phi_m(n) ))
+\intd{s}
++ \b \intd{W_s}, $$ where $$ \phi_m(n)  = \argmin_{\phi_m} {| \phi_n - \phi_m|}.
+$$ This binning is illustrated in \cref{fig:binning_visualized}.
+
+While we have no rigorous approach to determine the value of $M$, our limited
+experience suggests that given $N=1000$ ISIs, $M=10$ or $M=20$ gives satisfactory
+results for very different parameter regimes. In general, choosing $M$ is a
+balancing act. For $M$ too high, the resulting bins will have too few data
+points to approximate $\G(I)$ accurately. Therefore $M$ is forced to be small
+when sample size is not large. For $M$ too low, the approximation of the phase
+shifts will be poor, leading to a biased estimate of $\G(I)$. We illustrate the
+effect of increasing $M$ in \cref{fig:effect_of_M}. Generally, as long as there
+are sufficient data points, as $M$ increases, the approximation of using the
+survival distribution with $\phi_m$ instead of $\phi_n$ improves since
+$\phi_m(n) \ra \phi_n$ as $M \ra \infty$. In the sequel, we will use $M=20$ for
+sample sizes of $N=1000$ and $M=8$ for sample sizes of $N=100$.
+
+
+\subsection{Fokker-Planck Algorithm}
+Within each bin it is clear how to apply \cref{eq:SDF_vs_F_at_thresh}. In the
+$m$th bin, for a given $\phi_m$, we approximate $\G_{\phi}(t)$  by
+\begin{equation}
+\Gest_{\phi_m}(t) =
+ \frac{\#[i_n > t \, \big| \, \phi_{n-1} \in [\phi_m - \dphi/2,
+\phi_m + \dphi/2) ]}{N_m},
+\label{eq:SDF_estimate_per_bin}
+\end{equation}
+where $N_m$ is the number of ISIs in bin $m$. Using \cref{eq:SDF_vs_F_at_thresh}
+we define the loss function
+\begin{equation}
+L(\a,\b,\g) = 
+\sum_{\phi_m} N_m \Big\{ 
+% \int_0^T  \left( \G_{\phi_m}(t) - F^{\phi_m}_{\a,\b,\g}(\vt, t) \right)^2
+% \intd{t} \Big\}.
+\sup_{t>0} \left| \Gest_{\phi_m}(t) - F^{\phi_m}_{\a,\b,\g}(\xth,
+t) \right| \Big \}.
+\label{eq:loss_function_absorbingBC}
+\end{equation}
+The weight $N_m$ is included so that bins with larger sample sizes have a
+larger influence on the estimates. 
+ 
+To evaluate the supremum in \cref{eq:loss_function_absorbingBC}, we
+spline interpolate the empirically discrete $\Gest$ for each $\phi_m$, sample at
+the time nodes of the PDE discretization and 
+finally take the maximum amongst the sampled values.
+We then minimize $L$ using an optimization algorithm (see below,
+\cref{sec:method_performance}) and take our estimates $\abgest$ to be
+$$
+\abgest = \argmin_{\abg} L(\abg).
+$$
+
+Note that the relation between the spike time survival density, $\G_{\phi}$ and
+the transition distribution, $F_{\phi}$, in \cref{eq:SDF_vs_F_at_thresh} could
+also allow for an approximate maximum likelihood estimator (MLE), based on
+maximizing 
+$$
+L^{\textrm{MLE}}(\a,\b,\g) = \sum_n  \log ( g_{\phi_{n-1}}(i_n) )
+= \sum_n \log \big[ -\di_t F^{\phi_{n-1}}_{\a,\b,\g}(\xth, t) \big] \Big|_{t =
+i_n},
+ $$ where the derivative has to be approximated by finite differences. We
+can then again use binning to avoid having to compute the PDE separately for
+each $(i_n, \phi_{n-1})$. Our experience with the MLE approach has been that the
+quality of the estimates provided are similar to those obtained by minimizing
+\cref{eq:loss_function_absorbingBC} and that the associated computing times are
+on the same order. Due to this similarity and in order to keep the paper
+concise, we include details of the MLE estimates only in the supplementary
+online material.
+\subsection{Fortet Algorithm}
+An alternative approach is to form a loss function from
+\cref{eq:Fortet_moving_vth}. This is similar to what is done in
+\cite{Ditlevsen2008,Ditlevsen2007} for the simpler case of a constant threshold.
+Noting that $\int_0^t g (\t) [1-\F ] \intd{\t} = \Exp[ (1 - \F ) \charf_{I \leq
+t} ]$ where the expectation is taken with respect to the distribution of the
+random variable $I$, we can use the fact that the ISIs are approximately
+independent and invoke the law of large numbers to estimate the integral as
+\begin{multline*}
+\int_0^t g_{\phi_m}(\t) 
+\big[1-\F^{(\phi)}_{\{\b\}}(\vt_{\{\a,\g;\phi\}}(t),  t \,|\,
+\vt_{\{\a,\g;\phi\}}(\t), \t) \big] \intd{\t} \approx 
+\\
+1/N_m \sum_{\In < t} 
+\big[1
+- \F^{(\phi)}_{\{\b\}}(\vt_{\{\a,\g;\phi\}}(t), t \,|\,
+\vt_{\{\a,\g;\phi\}}(\In),\In )\big].
+\end{multline*}
+
+We then define the loss function
+\begin{align}
+L(\a,\b,\g) = 
+\sum_{\phi_m} N_m \Bigg\{ 
+% \sum_\In \Bigg[
+% \int_{\e}^{I_{\text{max}}}
+% 		 \Big[& 1 - \F^{(\phi_m)}_{\abg}(\vt(s), s|v_0) ] -
+% 		 \notag
+% \\
+% 		 &-  \tfrac{1}{N_m}\sum_{\In' < s} 
+% 		 [1 - \F^{(\phi_m)}_{\abg}(\vt(s),s-\In'| \vt(\In') ) ]
+% 		   \Big]^2	\intd{s}
+\sup_{s > 0}
+		 \Big|& 1 - \F^{(\phi_m)}_{\{\b\}}(\vt_{\{\a,\g;\phi\}}(s), s \,|\,0,0) ] 
+		 \notag
+\\
+		 &-  \tfrac{1}{N_m}\sum_{\In < s}
+		 \big[1 - \F^{(\phi_m)}_{\{\b\}}(\vt_{\{\a,\g;\phi\}}(s),s  \,|\,
+		 \vt_{\{\a,\g;\phi\}}(\In), \In) \big] \Big| / \omega(\phi_m; \a,\b,\g)
+		   \Bigg\}.
+\label{eq:loss_function_fortet}
+\end{align}
+We divide each inner term by $\omega(\phi_m; \a,\b,\g) =
+\sup_{s > 0} |1 - \F^{(\phi_m)}_{\abg}(\vt(s), s|v_0) |$,
+following the suggestion in
+\cite{Ditlevsen2007}. This scaling ensures that \cref{eq:Fortet_moving_vth}
+divided by $\omega(\a,\b,\g)$ will vary between $0$ and $1$ for all parameter
+values thus giving sense to the measure defined by the loss
+function. Since we can solve in closed form for $\F$, we have all we
+need given an observed spike train of 
+$\In$'s. We evaluate the $\sup$ by sampling at 
+$K=500$ uniformly spaced points in $(0, I_{\max} + \e]$ and taking the maximum
+of the sampled values. 
+
+
+\subsection{Initialization of the algorithms}
+The parameter search can be initialized in a simple way using the fact that
+the Fokker-Planck PDE is almost an 'advection-diffusion' equation whose solution is
+almost a Gaussian. Then $\G(t)$ can be approximated by the
+amount of probability mass of a Gaussian to the left of the threshold at time $t$. The
+idea is as follows. Suppose we are solving the following PDE
+\begin{equation}
+\di_t \f = -U \di_x [\f] + \frac{\b^2}{2} \di^2_x [\f].
+\label{eq:FP_pde}
+\end{equation}
+Its solution given an initial condition $\f(x,0) = \delta(x)$ will be a 
+Gaussian bell moving to the right with speed $U$ and standard deviation $\s =
+\b\sqrt{t}$.
+
+The survivor function $\G(t)$ can be thought of as the amount of area that has
+passed the threshold (from the left moving to the right). We can then invert the
+information about $\G$ to estimate $U$ and $\b$. In particular, a Gaussian bell
+has $\approx 0.158$ of its mass more than one standard deviation to the right of
+its mean. Thus, at time $t_1$ such that $\G(t_1) = 0.842$, the right tail of
+more than one standard deviation of the Gaussian bell has crossed the threshold.
+The threshold is at $x = 1$ and we obtain the following equation
+\begin{equation}
+U t_1 + \b \sqrt{t_1} = 1.
+\label{eq:right_1std}
+\end{equation}
+Similarly, at time $t_2$ such that $\G(t_2) = 1 - 0.842$, the Gaussian bell has
+crossed the threshold except for the left tail and we have
+\begin{equation}
+U t_2 - \b \sqrt{t_2} = 1.
+\label{eq:left_1std}
+\end{equation}
+If $U$ and $\b$ were constant, then \cref{eq:right_1std,eq:left_1std} provide
+two equations in two unknowns.
+However, $U = U(x,t) = (\a - x + \g \sin(\th (t + \phi)) )$ is not constant and
+we approximate $U$ as
+\begin{equation}
+U(x,t ) \approx \a -0.5 + \g \frac{1}{t}\int_0^t \sin(\th (\t+\phi)) \intd{\t}, 
+\end{equation}
+i.e.\ we approximate the space-dependent term, $x$, with the mid-point between
+the reset value, $v_0 = 0$, and the threshold, $\vt = 1$, and we approximate
+the time-dependent term, $\sin(\th (\t+\phi))$, by its time-average value
+between $0$ and $t$. If we use the \nth{0}, \nth{1} and \nth{2} standard 
+deviation points, we can form 5 equations in 3 unknowns as follows
+\begin{eqnarray*}
+\a t_1 + \g s(t_1) + 2\b \sqrt{t_1}
+&=& 1 + 0.5 t_1
+\\
+\a t_2 + \g s(t_2) + \b \sqrt{t_2}
+&=& 1 + 0.5 t_2 
+\\
+\a t_3 + \g s(t_3) + 0\b
+&=& 1 + 0.5 t_3
+\\
+\a t_4 + \g s(t_4)-1 \b \sqrt{t_4}
+&=& 1 + 0.5 t_4 
+\\
+\a t_5 + \g s(t_5) - 2\b \sqrt{t_5}
+&=& 1 + 0.5 t_5 
+\end{eqnarray*}
+with the time-average weighting function $s(t) = (\cos(\th \phi)
+-\cos(\th(t+\phi)))/{\th} $. However, the  approximation is best for earlier
+times, when the solution is closer to a Gaussian bell that is approaching the
+threshold, but less correct for later times, since it neglects the loss of
+probability mass and thus overestimates the backward probability current.
+Indeed, we have found it to be best to use only $t_1$ and $t_2$. In the
+following we use only these equations
+\begin{eqnarray*}
+\a t_1 + \g s(t_1) + 2\b \sqrt{t_1}
+&=& 1 + 0.5 t_1
+\\
+\a t_2 + \g s(t_2) + \b \sqrt{t_2}
+&=& 1 + 0.5 t_2 
+\end{eqnarray*}
+for the initializer.
+We can form these equations separately for each $\phi_m$ bin, thus
+resulting in $M \times 2$ equations for the unknowns $\a, \b$ and $\g$. Since
+we have more equations than unknowns, we use least-squares estimates in a
+regression to pick out unique $\a,\b$ and $\g$ estimates. 
+
+The proposed initialization procedure has two advantages. First, it is
+automatic, i.e.\ it requires only the data and no input or  guidance from the
+user. Second, it is extremely fast. While the precise effect of the initializer
+is shown in \cref{sec:method_performance}, it is intuitively clear that it will
+work best in the supra-threshold parameter regime when the bell curve is truly
+moving past the threshold as a whole and less so for sub-threshold regimes, when
+only the diffusive force serves to propel the process to reach $\vt$. The
+behaviour of the initializer in the different regimes is illustrated in
+\cref{fig:sdf_real_vs_init_estimated}. What we show in
+\cref{fig:sdf_real_vs_init_estimated} is the following: First we show the
+survival distribution for a given regime and $\phi_m$ fixed. Then using data
+generated from such a regime and with $\phi_n$ in the $m$th bin, the initializer
+tries to find the best approximation by the motion of a Gaussian bell which will
+fit this data, in the sense of solving for $\a,\b,\g$ as previously described.
+Once this is done, we then show in red the amount of area under this Gaussian
+bell to the left of the threshold. Of course the interpretation of the survival
+distribution for an ISI as a fraction of the area under a moving bell with
+conserved total area is wrong, but the assumption is useful in automatically
+generating initial values for the more appropriate approximations to start their
+work.
+
+
+\section{Method Comparison on Simulated Data}
+\label{sec:method_performance}
+We will now use our algorithms on spike trains simulated from the four different
+regimes; the supra-threshold, the critical, the super-sinusoidal and the
+sub-threshold. We have used 100 sample spike trains per regime, with $N=100$ as
+well as $N=1000$ spikes per train. In order to perform the numerical
+minimization of \cref{eq:loss_function_absorbingBC,eq:loss_function_fortet}, we
+have used an implementation of the Nelder-Mead algorithm from the SciPy library
+\cite{scipy}. The Nelder-Mead algorithm is a non-linear minimization routine
+which uses a bounding-polygon method to zero-in on the minimum and thus avoids
+the need to provide the gradient of the loss function. It is the standard
+non-gradient minimization algorithm.
+
+The estimation results are shown in
+\cref{fig:comprehensive_test_SuperT_relerrors,fig:comprehensive_test_SubT_relerrors,fig:comprehensive_test_crit_relerrors,fig:comprehensive_test_SuperSin_relerrors},
+where we plot box plots for the estimates, $\abgest$ in the four regimes. We
+also tabulate the average and the empirical 95\% confidence intervals of the
+estimates in \cref{tab:est_quantiles_100,tab:est_quantiles_1000}. Conclusions
+that can be drawn from these results are as follows. The initializer method is
+effective for the supra-threshold regime and gives reasonable ballpark estimates
+for all regimes, though the error can be substantial for the super-sinusoidal
+regime. In general, both the Fortet and Fokker-Planck algorithm estimate the
+parameters well in the supra-threshold, critical and super-sinusoidal regimes.
+The estimators variance is especially low in the supra-threshold regime, while
+it is higher for the critical and super-sinusoidal regimes. In the
+super-sinusoidal regime the two algorithms give accurate estimates even though
+the initializer can be quite off. On the other hand, in the sub-threshold regime
+the initializer has a performance comparable to that of the two more involved
+methods. It seems that distinguishing between the constant bias and the
+sinusoidal current is difficult if their sum is not sufficient to generate
+spikes without noise.
+
+The Fokker-Planck method has a larger bias but a smaller spread than the Fortet
+method for $N=100$, \cref{tab:est_quantiles_100}. However for
+$N=1000$, the two methods have comparable 
+spreads, while the Fortet method retains a smaller bias, see
+\cref{tab:est_quantiles_1000}. More precisely, for $N=1000$, the Fokker-Planck
+method has a smaller spread in the sub-threshold regime, while the Fortet method
+has a smaller spread in the super-sinusoidal regime. As such, at least in the
+super-sinusoidal regime, the Fortet method seems superior.
+
+The two algorithms are numerically intensive. For $N=100$ and $N=1000$ spikes,
+we show the times taken for the estimation in \cref{tab:walltimes}. While we
+have done most of our numerical work in Python/SciPy\cite{scipy}, we have
+implemented the critical components of both algorithms in C. That is we solve
+the inner part of \cref{eq:loss_function_fortet} and the Fokker-Planck PDE,
+\cref{eq:FP_pde_OU_absorbBC_CDF}, in C using the GSL libraries\cite{gsl}. From
+\cref{tab:walltimes}, we can verify that the computing time for the Fortet
+algorithm scales proportionally with the number of spikes. This is to be
+expected, since the Fortet equation has a term of the form $\sum_{i_n}$ which in
+turn has $N$ terms and this forms the bulk of the computing time for the
+Fortet equation. The Fokker-Planck algorithm, on the other hand, scales
+less-than-linearly with $N$, since the dependency on $N$ is in forming the
+approximation, $\Gest$ to the survivor function and that is not computationally
+intensive (solving the PDE is).
+
+
+
+%\end{document}
+
+
+
+
+% #ABSOLUTE ERRORS
+% % #RELATIVE ERRORS:
+
+% #CROSS ERROS:
+
+\section{The effect of $\th$}
+So far we have held $\th$ constant and equal to $1$. We now investigate the
+effect of varying $\th$ on the quality of estimates. To narrow the scope, we
+focus on increasing $\th$ while keeping the parameters in the critical regime
+such that $\a + \g/\sqrt{1+\th^2} = 1$ and $\a=0.5$. This amounts to increasing
+$\g$ with $\th$. We do the estimations for four values of $\th=[1,5,10,20]$.
+Similarly to the previous section, we use 100 sample spike trains per 
+parameter set, with each spike train consisting of $N=1000$ ISIs.
+
+We show box plots of the estimates for each $\th$ in
+\cref{fig:comprehensive_test_thetas_relerrors}. We then directly compare the two
+algorithms, Fortet vs.\ Fokker-Planck, in
+\cref{fig:comprehensive_test_thetas_cross_compare}. The immediate observation is
+that the Fokker-Planck algorithm fails to keep up at the higher frequencies and
+consistently underestimates $\g$. The Fortet algorithm does better, but still
+underestimates $\g$. In general, this underestimation of $\g$ is accompanied by
+an over-estimation of $\a$. This is exacerbated at higher $\th$. We illustrate
+the relation between estimates for $\a$ vs. $\g$ in
+\cref{fig:comprehensive_test_thetas_alpha_vs_gamma}, where it is quite clear
+that an underestimation of $\g$ is proportional to the overestimation of $\a$.
+
+For completeness we also include the estimates' average and empirical 95\%
+confidence intervals in \cref{tab:thetas_est_quantiles_1000}.
+
+\section{Discussion and Outlook}
+\label{sec:discusion}
+We have shown two methods to estimate parameters in
+\cref{eq:X_evolution_uo} from ISI data. Our methods are based
+on binning the spikes into bins with representative phase shifts. We have
+devised a constructive procedure to automatically initialize the methods from
+the data.
+
+Our computational results suggest that for low frequencies the Fortet algorithm
+is superior for large sample sizes, especially in the super-sinusoidal regime, while the
+Fokker-Planck algorithm has a comparable accuracy and a lower variance for small
+sample sizes. Both algorithms find sensible estimates most of the time, although
+they seem less effective in the sub-threshold regime. Their performance can
+be partially attributed to the ability of the initializer algorithm to supply
+good guesses for starting the optimization iterations.
+
+The Fokker-Planck equation allows for approximate maximum likelihood
+estimation. We chose an alternative loss function, though, because it
+marginally appeared more robust, possibly because a numerical derivation
+step is avoided. This is further investigated by simulations in the
+supplementary online material. The simulations suggest that the
+distribution of the maximum likelihood estimates in the super-sinusoidal
+regime appears bimodal, which is not occurring for the alternative loss
+function, \cref{eq:loss_function_absorbingBC}. %eq. \eqref{}. (((Eq. 17))) 
+
+We have also made a preliminary exploration of the effect of $\th$ on the
+quality of the estimates. Our results show that an increase in $\th$ makes the
+parameters $\a$ and $\g$ more difficult to estimate accurately and at high
+$\th$, $\g$ is underestimated, while $\a$ is over-estimated. We find that in
+this scenario, the Fortet algorithm does a markedly more accurate job then the
+Fokker-Planck algorithm.
+ 
+We have assumed  the time-constant $\t$ of the leak term known. In most
+experiments that is not realistic, and it would be preferable to estimate $\t$
+alongside the other parameters. However, it is difficult to estimate
+\cite{DitlevsenLansky212}. When we tried to estimate it together with the other
+parameters, we usually obtained results which were not accurate. The obtained
+estimates resulted in ISIs that very well matched the data, no worse than the
+ISIs obtained from the true parameters. This leads us to believe that the
+simultaneous estimation of $\t$ along with $\abg$ using only ISI data suffers
+from identifiability problems. In \cite{Mullowney2008}, they were able to
+estimate $\t$ in the simpler non-sinusoidally-driven model, but concluded that
+adding $\t$ as an unknown dramatically reduced the accuracy in the estimation of
+the other unknown parameters. The reason is that if $\t$ is also estimated from
+a single dataset alongside the other parameters, then a reasonable fit can be
+found to the data for various combinations of $\abg$ and $\t$, but the so-obtained
+parameter values can be far from the true values.
+
+Our model is relatively simple and ignores neurophysiological realism, such as
+the fact that the spiking threshold is likely non-constant, with a
+time-dependent functional form that would involve further unknown parameters. A
+recent paper attempting the parameter estimation in such a model, but without
+sinusoidal forcing, is \cite{Dong2011}. Furthermore, intra-cellular recordings
+suggest that a hard threshold is a rough approximation and an exponential
+voltage-dependent spiking intensity is more realistic \cite{Jahn2011}.
+
+While our work has used a very specific form of the periodic forcing term,
+namely $\g \sin(\th t)$,  it is clear how to apply the approach to an arbitrary
+periodic function. This can be done as long as one knows where in the period of
+oscillation a spike has occurred. If that is the case then the binning procedure
+can be applied and the estimation methods proposed can be attempted. 
+
+\section*{List of Abbreviations}  
+LIF: Leaky integrate-and-fire \\
+ISI: Interspike interval \\
+SDE: Stochastic differential equation\\
+PDE: Partial differential equation\\
+\section*{Competing Interests}
+\ifthenelse{\boolean{publ}}{\small}{}
+The authors declare that they have no competing interests.
+\section*{Acknowledgements}
+   \ifthenelse{\boolean{publ}}{\small}{}
+SD is supported by the Danish Council for Independent Research $\mid$ 
+Natural Sciences.
+\\ 
+AL acknowledges support from NSERC Canada.  
+\\
+AI is supported by a PGS-D scholarship from NSERC Canada. 
+% \section*{Author's contributions} Text for
+% this section \ldots  %%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %%             
+%     The Bibliography                       %% %%                              
+%                           %% %%  Bmc_article.bst  will be used to             
+%          %% %%  create a .BBL file for submission, which includes      %% %% 
+% XML structured for BMC.                                 %% %%  After
+% submission
+% of the .TEX file,                     %% %%  you will be prompted to submit
+% your .BBL file.         %% %%                                                 
+%        %% %%                                                         %% %% 
+% Note that the displayed Bibliography will not          %% %%  necessarily be
+% rendered by Latex exactly as specified  %% %%  in the online Instructions for
+% Authors.                %% %%                                                 
+%        %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% \newpage {\ifthenelse{\boolean{publ}}{\footnotesize}{\small}
+ 
+% \bibliographystyle{plain}
+\bibliographystyle{bmc_article}
+\bibliography{library,local}
+
+\ifthenelse{\boolean{publ}}{\end{multicols}}{}
+%  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %%                               %% %%
+% Figures                       %% %%                               %% %% NB:
+% this is for captions and  %% %% Titles. All graphics must be  %% %% submitted
+% separately and NOT  %% %% included in the Tex document  %% %%                 
+%              %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  %% %% Do not use
+% \listoffigures as most will included as separate files  \section*{Figures}
+% \subsection*{Figure 1 - Sample figure title} A short description of the figure
+% content should go here.  \subsection*{Figure 2 - Sample figure title} Figure
+% legend text.    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %%                        
+%       %% %% Tables                        %% %%                              
+% %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  %% Use of \listoftables is
+% discouraged. %% \section*{Tables} \subsection*{Table 1 - Sample table title}
+% Here is an example of a \emph{small} table in \LaTeX\ using
+% \verb|\tabular{...}|. This is where the description of the table should go.
+% \par \mbox{} \par \mbox{ \begin{tabular}{|c|c|c|} \hline
+% \multicolumn{3}{|c|}{My Table}\\ \hline A1 & B2  & C3 \\ \hline A2 & ... & ..
+% \\ \hline A3 & ..  & .  \\ \hline \end{tabular} } 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %%                               %% %%
+% Additional Files              %% %%                               %%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  \section*{Additional Files}
+% \subsection*{Additional file 1 --- Sample additional file title} Additional
+% file descriptions text (including details of how to view the file, if it is in
+% a non-standard format or the file extension).  This might refer to a
+% multi-page table or a figure.  \subsection*{Additional file 2 --- Sample
+% additional file title} Additional file descriptions text.
+
+\def \includegraphic{}
+\def \includegraphics{}
+\renewcommand{\includegraphic}[2][width = 1\textwidth]{}
+\renewcommand{\includegraphics}[2][width = 1\textwidth]{}
+\begin{figure}[ht] 
+\begin{center} 
+\includegraphics[width=0.95\textwidth]{Figs/Trajectories/path_T=24_combined.pdf} 
+\end{center} 
+\caption{Example trajectories from \cref{eq:X_evolution_uo} for 
+the four different parameter regimes using the parameter values given in 
+\cref{tab:regimes}. A) supra-threshold, B) super-sinusoidal, C) critical, D) 
+sub-threshold. In the supra-threshold regime 
+spikes occur regularly and often; in the super-sinusoidal regime 
+spikes cluster near the peak of the sine wave; in the critical regime 
+they occur less often; and in the sub-threshold regime, spikes occur 
+rarely. For all regimes, $\th = 1$.}  
+\label{fig:trajectory_examples}     
+\end{figure} 
+\begin{figure}[ht] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth]{Figs/FP/regimes_pdf_combined.pdf} 
+\caption{The four different parameter regimes using the parameter values given in 
+\cref{tab:regimes}. Illustrated are the 
+probability density functions, $g_{\phi_m}(t)$, for representative $\phi_m = 
+2\pi/\th \times \{0,0.25,0.5,0.75\}$.  
+Varying $\phi_m$ has, 
+ for the most part, the effect of shifting the curves laterally,  
+ while varying $\abg$ changes their characteristic form. For all regimes, $\th 
+ = 1$. 
+ A) supra-threshold, B) super-sinusoidal, C) critical, D) sub-threshold} 
+\label{fig:4regimes_illustrated_PDF}   
+\end{center}       
+\end{figure}              
+\begin{figure}[ht]     
+\begin{center}  
+\includegraphics[width=0.99\textwidth]{Figs/FP/regimes_sdf_combined.pdf} 
+\caption{The four different parameter regimes using the parameter values given in 
+\cref{tab:regimes}. Illustrated are the survivor 
+distribution functions, $\G_{\phi_m}(t)$, for representative $\phi_m = 2\pi/\th 
+\times \{0,0.25,0.5,0.75\}$. Varying $\phi_m$ has, for the most part, the effect 
+of shifting the curves laterally, while varying $\abg$ changes their 
+characteristic form. 
+A) supra-threshold, B) super-sinusoidal, C) critical, D) sub-threshold.} 
+\label{fig:4regimes_illustrated_SDF}     
+\end{center} 
+\end{figure}      
+\begin{figure}[h] 
+\begin{center} 
+\includegraphics[width=0.95\textwidth]{Figs/FP/SDF3D_combined.pdf}  
+\caption{Example solution to \cref{eq:FP_pde_OU_absorbBC_CDF} for 
+$(\a,\b,\g) = (0.5, 0.3, 0.5\sqrt{2})$; $\th= 1, \phi = \pi / 2$. 
+In A,B,C, we show the full solution in space-time $F(x,t)$. In (d) we show 
+the time solution at the upper boundary, $F(1,t)$.}  
+\label{fig:FP_pde_OU_absorbBC_CDF}  
+\end{center} 
+\end{figure} 
+\begin{figure}[ht] 
+\begin{center} 
+\includegraphics[width=0.9\textwidth]{Figs/Bins/Example_composite.pdf} 
+  \end{center} 
+\caption{ The raw $(\In, \phi_n)$ pairs (left) are binned into a set of $M$ bins 
+with a representative $\phi_m$ (right) and the ISIs within each bin are treated 
+as a renewal process. In this illustration, $M=8$, $\th = 
+1$ while the parameters $\abg$ are taken from the 
+supra-threshold regime. } 
+\label{fig:binning_visualized}  
+\end{figure} 
+\begin{figure}[h] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth]{Figs/FP/EffectOfM_Referees.pdf} 
+\caption{Effect of $M$, the number of bins, on the approximate survival 
+distribution. The full-drawn blue curve is the true survivor distribution 
+given in \cref{eq:FP_pde_OU_absorbBC_CDF}, the red points are the approximation 
+given in \cref{eq:SDF_estimate_per_bin}.   
+In the figures, the least populous (above) and most populous (below) bin for 
+each $M$ is shown. The width of the bins is $\dphi = {2\pi}/{(\th M)}$. 
+We have used A,E) $M=5$, B,F) $M=10$, C,G) $M=20$, 
+D,I) $M=40$. As $M$ increases, the approximation of using the survival 
+distribution using $\phi_m$ instead of $\phi_n$ improves since $\phi_m(n) \ra 
+\phi_n$ as $M \ra \infty$. The data is generated using parameter 
+values from the super-sinusoidal regime and $N=1000$. For this 
+particular data set the largest generated ISI was 6.55 time units.} 
+\label{fig:effect_of_M} 
+\end{center} 
+\end{figure} 
+\begin{figure}[htp] 
+\begin{center} 
+\includegraphics[width=.99\textwidth]{Figs/FP/sdf_init_vs_exact.pdf} 
+\caption[labelInTOC]{The blue curves are the numerically obtained survivor 
+  distributions $\G_\phi$ for the exact parameters in the four regimes (as in 
+  \cref{tab:regimes}) and $\th=1$. The red curves are obtained in the following 
+  manner: Simulations using the true parameters were used to generate sample spikes. 
+  Using these samples, the initializer algorithm was used to generate estimates 
+  for $\a,\b,\g$. Using these estimates, the bell curve discussed in sec.\ 3.4 
+  was formed and evolved in time.  
+  Thus, the red curve drawn in the figures measures the area under 
+  this bell that is to the left of the threshold at time $t$.  
+ A) supra-threshold, B) super-sinusoidal, C) critical, D) sub-threshold.} 
+  \label{fig:sdf_real_vs_init_estimated} 
+\end{center} 
+\end{figure} 
+\begin{figure}[p] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth] 
+{Figs/Estimates/FP_vs_Fortet_100x100_x1000superT_est_rel_errors_joint.pdf} 
+\caption{Boxplots of parameter estimates for the 
+supra-threshold regime. The upper plots (A,B,C) show estimates using $N=100$ sample spikes per 
+estimation, while the lower plots (D,E,F) use $N=1000$. The dashed line 
+indicates the true parameter value, while the red line inside the boxes 
+indicates the median of the estimates. 
+\\ 
+The boxes contain the central 50\% of the estimates. The bars indicate 
+the range of the estimates, except for outliers given by the points 
+outside the bars, and defined to be more than 1.5 times the 
+interquantile range (the height of the box) from the box.} 
+\label{fig:comprehensive_test_SuperT_relerrors} 
+\end{center} 
+\end{figure} 
+\begin{figure}[p] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth]{Figs/Estimates/FP_vs_Fortet_100x100_x1000superSin_est_rel_errors_joint.pdf} 
+\caption{Boxplots of parameter estimates for the 
+super-sinusoidal regime. The upper plots (A,B,C) show estimates using $N=100$ 
+sample spikes per estimation, while the lower plots (D,E,F) use $N=1000$. The dashed line 
+indicates the true parameter value, while the red line inside the boxes 
+indicates the median of the estimates.\\ 
+The boxes contain the central 50\% of the estimates. The bars indicate 
+the range of the estimates, except for outliers given by the points 
+outside the bars, and defined to be more than 1.5 times the 
+interquantile range (the height of the box) from the box.} 
+\label{fig:comprehensive_test_SuperSin_relerrors} 
+\end{center} 
+\end{figure} 
+\begin{figure}[p] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth]{Figs/Estimates/FP_vs_Fortet_100x100_x1000crit_est_rel_errors_joint.pdf} 
+\caption{Boxplots of parameter estimates for the 
+critical regime. 
+The upper plots (A,B,C) show estimates using $N=100$ sample spikes per 
+estimation, while the lower plots (D,E,F) use $N=1000$. The dashed line 
+indicates the true parameter value, while the red line inside the boxes 
+indicates the median of the estimates. 
+\\ 
+The boxes contain the central 50\% of the estimates. The bars indicate 
+the range of the estimates, except for outliers given by the points 
+outside the bars, and defined to be more than 1.5 times the 
+interquantile range (the height of the box) from the box.}   
+\label{fig:comprehensive_test_crit_relerrors} 
+\end{center}     
+\end{figure}  
+\begin{figure}[p]   
+\begin{center} 
+\includegraphics[width=0.99\textwidth]{Figs/Estimates/FP_vs_Fortet_100x100_x1000subT_est_rel_errors_joint.pdf} 
+\caption{Boxplots of parameter estimates for the  
+sub-threshold regime. 
+The upper plots (A,B,C) show estimates using $N=100$ sample spikes per 
+estimation, while the lower plots (D,E,F) use $N=1000$. The dashed line 
+indicates the true parameter value, while the red line inside the boxes 
+indicates the median of the estimates. 
+\\ 
+The boxes contain the central 50\% of the estimates. The bars indicate 
+the range of the estimates, except for outliers given by the points 
+outside the bars, and defined to be more than 1.5 times the 
+interquantile range (the height of the box) from the box.} 
+\label{fig:comprehensive_test_SubT_relerrors} 
+\end{center} 
+\end{figure} 
+\begin{figure}[htp] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth] 
+{Figs/Estimates/FP_vs_Fortet_100x100_cross_compare_joint.pdf} 
+\caption{Estimates based on samples of $N = 100$ spikes obtained from the 
+Fokker-Planck algorithm against the Fortet algorithm for the four different 
+parameter regimes, with parameter values given in table 
+\cref{tab:regimes}, fixing $\th=1$. Each row corresponds to one regime 
+and one set of simulations. Each column corresponds to a parameter, 
+with the specific value indicated above each plot.   
+A,B,C) Supra-threshold; D,E,F) Super-sinusoidal; G,H,I)  
+Critical; J,K,L) Sub-threshold.} 
+\label{fig:comprehensive_tests_cross_comparison} 
+\end{center} 
+\end{figure} 
+\begin{figure}[htp] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth]     
+{Figs/Estimates/FP_vs_Fortet_100x1000_cross_compare_joint.pdf} 
+\caption{Estimates based on samples of $N = 1000$ spikes obtained from the 
+Fokker-Planck algorithm against the Fortet algorithm for the four different 
+parameter regimes, with parameter values given in table 
+\cref{tab:regimes}, fixing $\th=1$. Each row corresponds to one regime 
+and one set of simulations. Each column corresponds to a parameter, 
+with the specific value indicated above each plot.   
+A,B,C) Supra-threshold; D,E,F) Super-sinusoidal; G,H,I)  
+Critical; J,K,L) Sub-threshold.} 
+\label{fig:comprehensive_tests_cross_comparison} 
+\end{center} 
+\end{figure} 
+\begin{figure}[htp] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth]   
+{Figs/Estimates/thetas_100x1000thetas_est_rel_errors.pdf} 
+\caption{Boxplots of parameter estimates for varying $\th$ across $[1, 5, 10, 20]$ while holding $\g / 
+\sqrt{1+\th^2}$ constant as to keep the parameters in the critical 
+regime. 
+A-C) $\th=1$,  D-F) $\th=5$,         
+G-I) $\th=10$, J-L) $\th=20$. 
+\\ 
+The boxes contain the central 50\% of the estimates. The bars indicate 
+the range of the estimates, except for outliers given by the points 
+outside the bars, and defined to be more than 1.5 times the 
+interquantile range (the height of the box) from the box.}   
+\label{fig:comprehensive_test_thetas_relerrors}     
+\end{center} 
+\end{figure}    
+\begin{figure}[htp] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth] 
+{Figs/Estimates/FP_vs_Fortet_thetas_cross_compare_joint.pdf}  
+\caption{Estimates based on samples of $N = 1000$ spikes obtained from the 
+Fokker-Planck algorithm against the Fortet algorithm for a parameter set in the 
+critical regime, while varying $\th$ across $[1, 5, 10, 20]$ and holding  
+$\g / \sqrt{1+\th^2}$ and $\a$ constant. 
+A,B,C) $\th=1$; D,E,F) $\th=5$; G,H,I) 
+$\th=10$; J,K,L) $\th=20$. }  
+\label{fig:comprehensive_test_thetas_cross_compare} 
+\end{center} 
+\end{figure} 
+\begin{figure}[htp] 
+\begin{center} 
+\includegraphics[width=0.99\textwidth]   
+{Figs/Estimates/thetavariation_100x1000_alphagamma_compare_joint.pdf} 
+\caption{Comparison of $\aest$ vs. $\gest$ parameter estimates while varying 
+$\th$ across $[1, 5, 10, 20]$,  holding $\g / \sqrt{1+\th^2}$ constant as to 
+keep the parameters in the critical regime. 
+A,B,C) $\th=1$; D,E,F) $\th=5$; G,H,I) 
+$\th=10$; J,K,L) $\th=20$.    
+} 
+\label{fig:comprehensive_test_thetas_alpha_vs_gamma} 
+\end{center} 
+\end{figure} 
+\clearpage
+\begin{table}[ht]
+
+\begin{center}
+\begin{tabular}{l|ccc}
+Regime Name & $\a$ & $\b$ & $\g$ \\ \hline
+Supra-threshold&1.40&0.30&0.14 \\
+Super-sinusoidal&0.10&0.30&1.98 \\
+Critical&0.50&0.30&0.71 \\
+Sub-threshold&0.40&0.30&0.57 \\
+\end{tabular}
+\caption{Example of $\abg$ parameter values for the different regimes, given $\th = 1$.}
+\label{tab:regimes}
+\end{center}
+\end{table}
+\begin{table}
+
+\begin{center}
+{\begin{tabular}{|c|ccc|} 
+Parameter
+& Initializer
+& Fokker-Planck
+& Fortet
+\\ \hline
+\multicolumn{4}{|c|}{Supra-threshold regime} \\[1mm]
+$\alpha=1.40$
+& $1.43 : [1.29, 1.56]$
+& $1.34 : [1.24, 1.43]$
+& $1.41 : [1.33, 1.49]$
+\\
+$\beta=0.30$
+& $0.17 : [0.10, 0.24]$
+& $0.29 : [0.21, 0.39]$
+& $0.29 : [0.22, 0.36]$
+\\
+$\gamma=0.14$
+& $0.16 : [0.02, 0.33]$
+& $0.12 : [0.02, 0.23]$
+& $0.12 : [0.01, 0.24]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{Super-sinusoidal regime} \\[1mm]
+$\alpha=0.10$
+& $0.92 : [0.83, 1.01]$
+& $0.28 : [0.02, 0.59]$
+& $0.24 : [-0.22, 0.42]$
+\\
+$\beta=0.30$
+& $0.15 : [0.10, 0.25]$
+& $0.31 : [0.14, 0.53]$
+& $0.32 : [0.14, 0.46]$
+\\
+$\gamma=1.98$
+& $1.35 : [1.13, 1.57]$
+& $1.67 : [1.33, 2.05]$
+& $1.77 : [1.44, 2.38]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{Critical regime} \\[1mm]
+$\alpha=0.50$
+& $0.72 : [0.66, 0.80]$
+& $0.57 : [0.32, 0.73]$
+& $0.57 : [0.36, 0.73]$
+\\
+$\beta=0.30$
+& $0.19 : [0.10, 0.26]$
+& $0.27 : [0.17, 0.40]$
+& $0.25 : [0.15, 0.40]$
+\\
+$\gamma=0.71$
+& $0.57 : [0.44, 0.73]$
+& $0.55 : [0.30, 0.83]$
+& $0.62 : [0.38, 0.93]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{Sub-threshold regime} \\[1mm]
+$\alpha=0.40$
+& $0.62 : [0.57, 0.67]$
+& $0.63 : [0.33, 0.84]$
+& $0.58 : [0.03, 1.00]$
+\\
+$\beta=0.30$
+& $0.17 : [0.10, 0.29]$
+& $0.20 : [0.10, 0.37]$
+& $0.19 : [0.00, 0.41]$
+\\
+$\gamma=0.57$
+& $0.32 : [0.00, 0.53]$
+& $0.29 : [0.00, 0.62]$
+& $0.46 : [0.00, 1.19]$
+\\
+\hline
+ \end{tabular}}\\
+\end{center}
+\caption{Averages and empirical 95\% confidence intervals of the estimates for
+$N=100$ spikes per train.}
+\label{tab:est_quantiles_100}
+\end{table}
+\begin{table}
+
+\begin{center}
+{\begin{tabular}{|c|ccc|} 
+Parameter
+& Initializer
+& Fokker-Planck
+& Fortet
+\\ \hline
+\multicolumn{4}{|c|}{Supra-threshold regime} \\[1mm]
+$\alpha=1.40$
+& $1.44 : [1.40, 1.50]$
+& $1.36 : [1.33, 1.40]$
+& $1.40 : [1.37, 1.42]$
+\\
+$\beta=0.30$
+& $0.25 : [0.22, 0.28]$
+& $0.29 : [0.26, 0.32]$
+& $0.30 : [0.27, 0.32]$
+\\
+$\gamma=0.14$
+& $0.14 : [0.10, 0.19]$
+& $0.14 : [0.10, 0.17]$
+& $0.14 : [0.10, 0.18]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{Super-sinusoidal regime} \\[1mm]
+$\alpha=0.10$
+& $0.90 : [0.85, 0.92]$
+& $0.11 : [0.03, 0.29]$
+& $0.10 : [0.03, 0.16]$
+\\
+$\beta=0.30$
+& $0.18 : [0.14, 0.23]$
+& $0.30 : [0.21, 0.34]$
+& $0.31 : [0.22, 0.34]$
+\\
+$\gamma=1.98$
+& $1.26 : [1.16, 1.34]$
+& $1.92 : [1.49, 2.05]$
+& $1.96 : [1.86, 2.07]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{Critical regime} \\[1mm]
+$\alpha=0.50$
+& $0.73 : [0.70, 0.75]$
+& $0.51 : [0.43, 0.63]$
+& $0.53 : [0.45, 0.64]$
+\\
+$\beta=0.30$
+& $0.20 : [0.17, 0.24]$
+& $0.29 : [0.24, 0.32]$
+& $0.28 : [0.19, 0.33]$
+\\
+$\gamma=0.71$
+& $0.54 : [0.44, 0.61]$
+& $0.66 : [0.52, 0.76]$
+& $0.67 : [0.54, 0.77]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{Sub-threshold regime} \\[1mm]
+$\alpha=0.40$
+& $0.62 : [0.55, 0.65]$
+& $0.57 : [0.45, 0.66]$
+& $0.56 : [0.26, 0.71]$
+\\
+$\beta=0.30$
+& $0.20 : [0.17, 0.26]$
+& $0.22 : [0.18, 0.29]$
+& $0.21 : [0.13, 0.35]$
+\\
+$\gamma=0.57$
+& $0.36 : [0.18, 0.44]$
+& $0.36 : [0.25, 0.50]$
+& $0.43 : [0.28, 0.72]$
+\\
+\hline
+ \end{tabular}}\\
+\end{center}
+\caption{Averages and empirical 95\% confidence intervals of the estimates for $N=1000$
+spikes per train. }
+\label{tab:est_quantiles_1000}
+\end{table}
+\begin{table}
+
+\begin{center}
+\subfloat[N=100]{
+\begin{tabular}{c|cc|}
+Regime & Fortet & Fokker-Planck \\
+\hline
+Sub-threshold
+& 1.29 $\pm$ 0.72
+& 0.52 $\pm$ 0.21
+\\
+Supra-threshold
+& 0.83 $\pm$ 0.28
+& 0.18 $\pm$ 0.20
+\\
+Critical
+& 0.94 $\pm$ 0.42
+& 0.36 $\pm$ 0.16
+\\
+Super-sinusoidal
+& 1.36 $\pm$ 0.46
+& 0.43 $\pm$ 0.17
+\\
+\end{tabular}
+}
+\subfloat[N=1000]{
+\begin{tabular}{|c|cc}
+Regime & Fortet & Fokker-Planck \\
+\hline
+Sub-threshold
+& 9.68 $\pm$ 4.98
+& 1.69 $\pm$ 0.91
+\\
+Supra-threshold
+& 3.90 $\pm$ 1.05
+& 0.21 $\pm$ 0.06
+\\
+Critical
+& 10.03 $\pm$ 2.88
+& 1.28 $\pm$ 0.41
+\\
+Super-sinusoidal
+& 10.13 $\pm$ 2.24
+& 1.06 $\pm$ 0.33
+\\
+\end{tabular}
+}
+\end{center}
+\caption{Average times $\pm$ standard deviations in seconds for the algorithm
+in various regimes. Left: $N = 100$ spikes; right: $N = 1000$ spikes.}
+\label{tab:walltimes}
+\end{table} 
+\begin{table}[htp]
+
+\begin{center}
+{\begin{tabular}{|c|ccc|} 
+Parameter
+& Initializer
+& Fokker-Planck
+& Fortet
+\\ 
+\hline \hline
+\multicolumn{4}{|c|}{$\Omega=1$} \\[1mm]
+$\alpha=0.50$
+& $0.73 : [0.69, 0.75]$
+& $0.52 : [0.45, 0.61]$
+& $0.52 : [0.44, 0.62]$
+\\
+$\beta=0.30$
+& $0.20 : [0.17, 0.25]$
+& $0.29 : [0.24, 0.33]$
+& $0.29 : [0.22, 0.34]$
+\\
+$\gamma=0.71$
+& $0.54 : [0.44, 0.62]$
+& $0.64 : [0.53, 0.75]$
+& $0.68 : [0.55, 0.81]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{$\Omega=5$} \\[1mm]
+$\alpha=0.50$
+& $0.88 : [0.76, 0.99]$
+& $0.78 : [0.61, 0.89]$
+& $0.64 : [0.39, 0.99]$
+\\
+$\beta=0.30$
+& $0.24 : [0.17, 0.31]$
+& $0.26 : [0.20, 0.34]$
+& $0.27 : [0.12, 0.34]$
+\\
+$\gamma=2.55$
+& $0.85 : [0.00, 1.65]$
+& $0.92 : [0.00, 1.68]$
+& $1.86 : [0.00, 3.10]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{$\Omega=10$} \\[1mm]
+$\alpha=0.50$
+& $0.90 : [0.78, 0.99]$
+& $0.71 : [0.52, 0.88]$
+& $0.58 : [0.37, 0.86]$
+\\
+$\beta=0.30$
+& $0.25 : [0.18, 0.33]$
+& $0.26 : [0.20, 0.35]$
+& $0.28 : [0.23, 0.32]$
+\\
+$\gamma=5.02$
+& $2.82 : [0.92, 4.38]$
+& $2.72 : [0.95, 3.88]$
+& $4.32 : [1.20, 6.49]$
+\\
+\hline \hline
+\multicolumn{4}{|c|}{$\Omega=20$} \\[1mm]
+$\alpha=0.50$
+& $0.93 : [0.76, 1.02]$
+& $0.75 : [0.50, 0.92]$
+& $0.62 : [0.31, 0.97]$
+\\
+$\beta=0.30$
+& $0.27 : [0.20, 0.33]$
+& $0.29 : [0.20, 0.43]$
+& $0.29 : [0.25, 0.33]$
+\\
+$\gamma=10.01$
+& $5.35 : [0.00, 12.29]$
+& $3.98 : [0.00, 6.83]$
+& $7.48 : [0.00, 13.96]$
+\\
+\hline
+\end{tabular}}\\
+\end{center}
+\caption{Averages and empirical 95\% confidence intervals of estimates for $N=1000$
+spikes per train in the critical regime for varying $\th$ across
+[1,5,10,20]. Note that the upper subtable corresponds to the third
+subtable in \cref{tab:est_quantiles_1000}. Numbers differ slightly due to statistical
+fluctuations in the simulations. }
+\label{tab:thetas_est_quantiles_1000}
+\end{table}
+\end{bmcformat}
+\end{document}

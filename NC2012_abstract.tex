@@ -1,0 +1,166 @@
+\documentclass[a4paper,11pt]{article}
+
+% Use \includegraphics{file} if figures are needed
+\usepackage{graphicx}
+
+\usepackage{amsmath}
+\usepackage{amscd}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+\usepackage{hyperref}
+%\usepackage{url}
+
+\usepackage{subfig}
+
+\usepackage{aviolov_style}
+\usepackage{local_style}
+
+\oddsidemargin 5mm
+\evensidemargin -5mm
+\topmargin -15mm
+\textwidth 160mm
+\textheight 24.5cm
+
+
+\begin{document}
+
+\begin{center}
+\textbf{{\Large 
+Inverse Problem for Leaky
+Integrate-and-Fire Neuronal Models using Spike-Times Data
+}}
+
+\medskip
+
+\textbf{{\large The sinusoidally-driven case}}
+
+\bigskip
+
+\textit{Alexandre Iolov},
+\textit{Andr\'e Longtin} \\
+University of Ottawa  \\
+Physics Department, 150 Louis Pasteur \\
+Ottawa, Ontario, Canada K1N 6N5  \\
+\{alongtin,aiolo040\} at uottawa dot ca \\ 
+\end{center}
+
+\section*{Abstract} We aim to estimate structural parameters (the coefficients)
+of a stochastic leaky-integrate and fire neuronal model given only data for the
+interspike intervals (ref.\ \cite{Meng2011,Mullowney2008a,Ditlevsen2007}).
+Building on the Fortet Integral Equation method introduced for this problem in \cite{Ditlevsen2008} and the classical Fokker-Plank
+equation, we extend the methods to the case of a time-dependent drift, in
+particular a sinusoidal term with unknown amplitude, a situation common for
+sensory neurons \cite{Chacron2000}. 
+
+Thus the voltage trajectory, $X$, is assumed to follow the following trajectory
+(in non-dimensional form):
+\begin{equation}
+dX_s = (\a - X_s + \g \sin( \th (s+\phi) ) ) \intd{s} + \b \intd{W_s} .
+\label{eq:X_evolution_uo}
+\end{equation}
+until $X$ hits a threshold at which time a spike is recorded and $X$ is reset.
+Here, $intd{W_s}$ is an increment from standard Brownian motion.
+
+The main difficulty in estimating the parameters for these dynamics from
+spike-data only is that the observed interspike-intervals of the inferred
+stochastic process do not form a renewal process due to the phase differences in
+the sinusoidal term at the beginning of each interval (at each spike). We
+propose to deal with this difficulty by binning the data into several bins each
+of which with approximately the same phase and then to treat each bin with the
+methods developed for renewal processes (the Fortet Equation and the
+Fokker-Plank equation). Both algorithms are iterative and so we also introduce a
+simple and constructive initialization procedure to provide them with initial
+guesses for the parameters directly and automatically from the data. The
+initializer works on approximating the distribution of spike dynamics as an
+advected Gaussian bell, whose mean and std. deviation can be estimated from the
+quantiles of the ISI distribution.
+
+\section*{Results to Present}
+We attempt to estimate the parameters for four (4) distinct regimes, which we
+call: 'Super-Threshold', 'Critical', 'Sub-Threshold' and 'Super-Sinusoidal'. The
+regimes' respective parameters are in tab.\ \ref{tab:regimes}. These regimes try
+to represent the following scenarios: in the 'Super-Threshold', the bias
+current, $\a$ is strong enough to trigger spikes on its own and the noise and
+sinusoidal currents only create jitter around the regular spiking;  in the
+'Critical' regime the two deterministic currents, $\a$ and $\g \sin()$ are
+barely strong enough to spike without noise; in the 'Sub-Threshold', the neuron
+spikes only due to the stochastic fluctuations; while the 'Super-Sinusoidal' is
+like 'Super-Threshold', but here it is the sinusoidal $\g \sin()$ term that
+dominates and that is the primary driver of the spikes. 
+
+The estimation results for 16 spike trains are shown in Fig.\
+\ref{fig:comprehensive_tests}. We see that the estimation procedures are most
+accurate for the 'Super-Threshold' and the 'Critical' regimes. We also find the
+Fortet-equation method to be more accurate usually, but less robust, meaning it
+is more likely to be way off. In contrast, the Fokker-Plank-equation method is
+more robust. We also find that the proposed initializer is doing an effective
+job, starting the iterative methods close to the true parameter values. 
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{l|ccc}
+Regime Name & $\a$ & $\b$ & $\g$ \\
+\hline
+Super Threshold & 
+1.5 & 0.3 & 1.0 \\ 
+Critical &
+0.55 & 0.5 & .55 \\ 
+Sub-Threshold &
+0.4 & 0.3 & .4 \\ 
+Super Sinusoidal &
+0.1 & 0.3 & 2  
+\end{tabular}
+\caption{$\abg$ parameters for the different regimes.}
+\label{tab:regimes}
+\end{center}
+\end{table} 
+
+\begin{figure}[h!]
+\begin{center}
+\subfloat[SUPER THRESHOLD]
+{
+\label{fig:comp_test_superT}
+\includegraphics[width=0.48\textwidth]
+{Figs/Estimates/superT_est_errors.png}
+}
+\subfloat[CRITICAL]
+{
+\label{fig:comp_test_critical}
+\includegraphics[width=0.48\textwidth]
+{Figs/Estimates/crit_est_errors.png} 
+}
+\\
+\subfloat[SUB THRESHOLD]
+{
+\label{fig:comp_test_subT}
+\includegraphics[width=0.48\textwidth]
+{Figs/Estimates/subT_est_errors.png}
+}
+\subfloat[SUPER SINUSOID]
+{
+\label{fig:comp_test_superSin}
+\includegraphics[width=0.48\textwidth]
+{Figs/Estimates/superSin_est_errors.png}
+}
+\caption{Absolute errors of the parameter estimation routines for the 4
+different spike regimes. The upper panel shows the difference
+between the estimated and the real value for each parameter, e.g. $\tilde{\a} -
+\a$. The lower panel shows the sum of the absolute errors, i.e.\ $|\tilde{\a} - \a|+|\tilde{\b}
+- \b| +|\tilde{\g} - \g|$.
+NOTE: figures have different scales.}
+\label{fig:comprehensive_tests}
+\end{center}
+\end{figure}
+
+\medskip\noindent\textbf{\textit{Keywords:}}
+inverse first-passage times, stochastic neuron models, parameter estimation from
+stopping times, Fortet integral equation, Fokker-Plank equation.
+
+\bibliographystyle{plain}
+\bibliography{library}
+
+\end{document}

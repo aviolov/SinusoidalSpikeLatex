@@ -1,0 +1,119 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amscd}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+% \setcounter{secnumdepth}{0}
+% \usepackage{circuitikz}
+\usepackage{pgf}
+\usepackage{tikz}
+% \usetikzlibrary{arrows,snakes,backgrounds}
+% \usetikz
+\usepackage{subfig}
+
+% \usepackage{appendix}
+% \usepackage{listings}
+% \usepackage{color}
+
+\usepackage{hyperref}
+%\usepackage{url}
+
+\usepackage{cleveref}
+\usepackage{ulem}
+
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+
+\usepackage{aviolov_style}
+\usepackage{local_style}
+
+\begin{document}
+
+\begin{figure}[ht]
+\begin{center}
+\subfloat[b =0.10]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b1_th2.png}}
+\subfloat[b =1.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b10_th2.png}}
+\subfloat[b =5.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b50_th2.png}}
+\\
+\subfloat[b =0.10]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b1_th10.png}}
+\subfloat[b =1.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b10_th10.png}}
+\subfloat[b =5.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b50_th10.png}}
+\\
+\subfloat[b =0.10]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b1_th20.png}}
+\subfloat[b =1.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b10_th20.png}}
+\subfloat[b =5.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b50_th20.png}}
+\\
+\subfloat[b =0.10]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b1_th50.png}}
+\subfloat[b =1.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b10_th50.png}}
+\subfloat[b =5.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b50_th50.png}}
+\\
+\subfloat[b =0.10]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b1_th100.png}}
+\subfloat[b =1.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b10_th100.png}}
+\subfloat[b =5.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b50_th100.png}}
+\end{center}
+\caption{SDF for varying $\b,\theta$.}
+\end{figure}
+ 
+
+\begin{figure}[ht]
+\begin{center}
+
+\subfloat[b =0.10]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b1_th2_pdf.png}}
+\subfloat[b =1.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b10_th2_pdf.png}}
+\subfloat[b =5.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b50_th2_pdf.png}}
+\\
+\subfloat[b =0.10]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b1_th10_pdf.png}}
+\subfloat[b =1.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b10_th10_pdf.png}}
+\subfloat[b =5.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b50_th10_pdf.png}}
+\\
+\subfloat[b =0.10]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b1_th20_pdf.png}}
+\subfloat[b =1.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b10_th20_pdf.png}}
+\subfloat[b =5.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b50_th20_pdf.png}}
+\\
+\subfloat[b =0.10]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b1_th50_pdf.png}}
+\subfloat[b =1.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b10_th50_pdf.png}}
+\subfloat[b =5.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b50_th50_pdf.png}}
+\\
+\subfloat[b =0.10]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b1_th100_pdf.png}}
+\subfloat[b =1.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b10_th100_pdf.png}}
+\subfloat[b =5.00]
+{\includegraphics[width =0.33\textwidth,height=.25\textheight]{Figs/FP/superSin_vary_betatheta_b50_th100_pdf.png}}
+\end{center}
+\caption{SDF for varying $\b,\theta$.}
+\end{figure}
+
+\end{document}
